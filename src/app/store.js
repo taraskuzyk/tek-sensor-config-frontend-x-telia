@@ -5,6 +5,7 @@ import homeSensorv3Reducer from '@features/homeSensorv3/homeSensorv3.js'
 export default configureStore({
   reducer: {
     counter: counterReducer,
+    availableSensors: [],
     homeSensorv3: homeSensorv3Reducer,
   },
 });

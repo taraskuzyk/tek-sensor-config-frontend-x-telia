@@ -1,6 +1,9 @@
 import React, {useState} from "react";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import logo from '@/logo_tek.png'
+import './navbar.scss'
+
 import {
   Navbar,
   NavbarToggler,
@@ -35,15 +38,18 @@ export default (props) => {
 
 
   return (
-    <Navbar type="dark" theme="primary" expand="md">
-      <NavbarBrand href="#">Shards React</NavbarBrand>
+    <Navbar type="dark" theme="primary" expand="md" className="mb-4">
+      <NavbarBrand href="#">
+        <img src={logo} alt="TEKTELIC" className="logo mr-3 mr-lg-5" />
+        Sensor Converter Tool
+      </NavbarBrand>
       <NavbarToggler onClick={toggleNavbar} />
 
-      <Collapse open={collapseOpen} navbar>
+      <Collapse open={collapseOpen} navbar className="justify-content-end mr-lg-2 mr-sm-0">
         <Nav navbar>
           <NavItem>
-            <NavLink to="404" className="nav-link active">
-              Active
+            <NavLink to="/" className="nav-link active">
+              Home
             </NavLink>
           </NavItem>
           <NavItem>
@@ -51,7 +57,7 @@ export default (props) => {
               Disabled
             </NavLink1>
           </NavItem>
-          <Dropdown
+          {/* <Dropdown
             open={dropdownOpen}
             toggle={toggleDropdown}
           >
@@ -63,10 +69,10 @@ export default (props) => {
               <DropdownItem>Another action</DropdownItem>
               <DropdownItem>Something else here</DropdownItem>
             </DropdownMenu>
-          </Dropdown>
+          </Dropdown> */}
         </Nav>
 
-        <Nav navbar className="ml-auto">
+        {/* <Nav navbar className="ml-2">
           <InputGroup size="sm" seamless>
             <InputGroupAddon type="prepend">
               <InputGroupText>
@@ -75,7 +81,7 @@ export default (props) => {
             </InputGroupAddon>
             <FormInput className="border-0" placeholder="Search..." />
           </InputGroup>
-        </Nav>
+        </Nav> */}
       </Collapse>
     </Navbar>
   );
