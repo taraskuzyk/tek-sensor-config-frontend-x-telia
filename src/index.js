@@ -6,16 +6,21 @@ import store from '@store';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
+import "bootstrap/dist/css/bootstrap.min.css";
+import "shards-ui/dist/css/shards.min.css"
+
+
 import {BrowserRouter} from 'react-router-dom'
 
+
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter history>
         <App />
       </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

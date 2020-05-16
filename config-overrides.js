@@ -38,6 +38,7 @@ module.exports = function override(config, env) {
     '@components': path.resolve(__dirname, 'src/components') ,
     '@store$': path.resolve(__dirname, 'src/app/store.js'),
     '@': path.resolve(__dirname, 'src'),
+    '@elements': path.resolve(__dirname, 'src/elements'),
     '@features': path.resolve(__dirname, 'src/features'),
     '@utils': path.resolve(__dirname, 'src/utils')
   })(config)
