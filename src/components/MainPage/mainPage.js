@@ -49,9 +49,9 @@ const MainPage = (props) => {
             <p>Select type of your device</p>
           </Col>
           {
-            selectAvailableSensors.map((el) => {
+            selectAvailableSensors.map((el, i) => {
               return (
-                      <Col sm={6} lg={4} xs={12} className="mt-3">
+                      <Col sm={6} lg={4} xs={12} className="mt-3" key={i}>
                         <Card>
                           <CardHeader>{el.name}</CardHeader>
                           <CardImg src="https://place-hold.it/300x200" />

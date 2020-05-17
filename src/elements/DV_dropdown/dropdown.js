@@ -1,5 +1,6 @@
 import React, {useState, Fragment} from 'react'
 
+import './dropdown.scss'
 
 import {
   Dropdown,
@@ -24,7 +25,7 @@ const DV_Dropdown = (props) => {
   const search = useLocation().search;
   const params = new URLSearchParams(search)  
 
-  const currentTab = params.has('category') ? params.get('category') : 'all'
+  const currentTab = params.has('category') ? params.get('category') : 'Select Category'
   console.log('currentTab:', currentTab)
   
   
@@ -36,8 +37,8 @@ const DV_Dropdown = (props) => {
   return (
     <Fragment>
       <Dropdown open={open} toggle={handler}>
-      <DropdownToggle >
-        Dropdow
+      <DropdownToggle className="dropdown-toggle ">
+        {currentTab}
       </DropdownToggle>
         <DropdownMenu>
           <DropdownItem>Action</DropdownItem>

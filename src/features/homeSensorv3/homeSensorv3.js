@@ -4,9 +4,9 @@ import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash'
 
 const categories = _.uniqBy(data, function (e) {
-  return e["Category name"];
+  return e["Category description"];
 }).map((el) =>{
-  return el["Category name"];
+  return el["Category description"];
 })
 
 console.log(categories)
