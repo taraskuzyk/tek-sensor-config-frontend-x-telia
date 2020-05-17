@@ -17,6 +17,8 @@ const desc = 'The KONA home sensor integrates a lot of useful functionality into
 export const homeSensorv3Slice = createSlice({
   name: 'homeSensorv3',
   initialState: {
+    name:'TEKTELIC All-in-One Home Sensor v3',
+    image:'homeSensorv3.png',
     dropdown: categories,
     description: desc,
     data
@@ -40,8 +42,19 @@ export const homeSensorv3Slice = createSlice({
 //   }, 1000);
 // };
 
-console.log(data)
+export const sensorSelector = (id) => {
 
+  console.log('444', id)
+
+  // if (id in state)
+  // {
+  //   console.log('ID найдено')
+  //   return state[id]
+  // }
+  return null
+}
+
+export const selectAllState = state => state
 
 export const selectHomeSensor = state => state.homeSensorv3;
 export const selectHomeSensorDescription = state => state.homeSensorv3.description

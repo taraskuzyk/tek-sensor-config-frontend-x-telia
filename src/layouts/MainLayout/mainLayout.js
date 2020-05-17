@@ -27,6 +27,11 @@ export const MainLayout = (props) => {
             </Col>
           </Row>
         </Container>
+        <Container className="mt-5">
+          {/* <footer>
+            Lorem ipsum dolor sit amet.
+          </footer> */}
+        </Container>
       
     </Wrapper>
   )

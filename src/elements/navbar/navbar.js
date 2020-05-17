@@ -39,10 +39,17 @@ export default (props) => {
 
   return (
     <Navbar type="dark" theme="primary" expand="md" className="mb-4">
-      <NavbarBrand href="#">
-        <img src={logo} alt="TEKTELIC" className="logo mr-3 mr-lg-5" />
-        Sensor Converter Tool
-      </NavbarBrand>
+      <NavbarBrand 
+      tag={()=>
+        {
+          return (
+          <NavLink to="/" className="navbar-brand">
+            <img src={logo} alt="TEKTELIC" className="logo mr-3 mr-lg-5" />
+            Sensor Converter Tool
+          </NavLink>
+          )
+        }
+        }/>
       <NavbarToggler onClick={toggleNavbar} />
 
       <Collapse open={collapseOpen} navbar className="justify-content-end mr-lg-2 mr-sm-0">

@@ -1,36 +1,75 @@
 import React, {Fragment} from 'react'
 import logo from '../../logo.svg'
 import {Counter} from '../../features/counter/Counter'
-import {Col, Row} from 'shards-react'
+
+import PropTypes from 'prop-types'
+
+import {
+  Col,
+  Row,
+  Card,
+  CardHeader,
+  CardTitle,
+  CardImg,
+  CardBody,
+  CardFooter,
+  Button
+} from "shards-react";
 
 import {useDispatch, useSelector} from 'react-redux'
 
-import {selectHomeSensor, selectHomeSensorDescription, selectHomeSensorCategories} from '@features/homeSensorv3/homeSensorv3.js'
+import {
+  selectHomeSensor, 
+  selectHomeSensorDescription, 
+  selectHomeSensorCategories
+} from '@features/homeSensorv3/homeSensorv3.js'
+import {
+selectAvailableSensors as selAvSensor
+} from '@features/availableSensors/availableSensors'
+
 import allInOne_img from '@/app/img/TEK_HomeSensor.png'
 
 const isDefault = false
 
-const MainPage = () => {
+const MainPage = (props) => {
 
   const selectDescription = useSelector(selectHomeSensorDescription)
   const selectCategories = useSelector(selectHomeSensorCategories)
   const selectHomeSensorState = useSelector(selectHomeSensor)
+  const selectAvailableSensors = useSelector(selAvSensor)
+
+  console.log(selectAvailableSensors)
 
   if (!isDefault) {
     return (
       <Fragment>
         <Row>
           <Col sm={12}>
-            <h1>Home Sensor</h1>
+            <h1>Tektelic Data Converter Tool</h1>
+            <p>Select type of your device</p>
           </Col>
-          <Col lg={{size: 2, offset: 0}} sm={{size: 6, offset: 2}}>
-          <img src={allInOne_img} alt="" className="img-thumbnail"/>
-          </Col>
-          <Col sm={12} lg={10}>
-          <p className="smaller">
-              {selectDescription}
-          </p>
-          </Col>
+          {
+            selectAvailableSensors.map((el) => {
+              return (
+                      <Col sm={6} lg={4} xs={12} className="mt-3">
+                        <Card>
+                          <CardHeader>{el.name}</CardHeader>
+                          <CardImg src="https://place-hold.it/300x200" />
+                          <CardBody>
+                            <CardTitle>{el.name}</CardTitle>
+                            <p>{el.description}</p>
+                            <Button onClick={(e)=>{
+                              e.preventDefault()
+                              props.history.push(`/sensor/${el.id}`)
+                            }}>Select &rarr;</Button>
+                          </CardBody>
+                          {el.footer && <CardFooter className="smaller">{el.footer}</CardFooter>}
+                          
+                        </Card>
+                      </Col>
+              )
+            })
+          }
             
         </Row>
        
