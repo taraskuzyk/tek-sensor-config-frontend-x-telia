@@ -9,6 +9,8 @@ import * as serviceWorker from './serviceWorker';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
 
+import 'jquery'
+
 
 import {BrowserRouter} from 'react-router-dom'
 

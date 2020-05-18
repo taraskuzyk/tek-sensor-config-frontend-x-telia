@@ -14,7 +14,8 @@ import {
 import { 
   useParams,
   useRouteMatch,
-  useLocation
+  useLocation, 
+  NavLink
 } from "react-router-dom"
 
 
@@ -23,10 +24,11 @@ const DV_Dropdown = (props) => {
   const [open, setOpen] = useState(false)
 
   const search = useLocation().search;
+  const location = useLocation()
   const params = new URLSearchParams(search)  
 
   const currentTab = params.has('category') ? params.get('category') : 'Select Category'
-  console.log('currentTab:', currentTab)
+  console.log('currentTab:22', props.dropdown, currentTab)
   
   
 
@@ -41,9 +43,28 @@ const DV_Dropdown = (props) => {
         {currentTab}
       </DropdownToggle>
         <DropdownMenu>
-          <DropdownItem>Action</DropdownItem>
-          <DropdownItem>Another action</DropdownItem>
-          <DropdownItem>Something else here</DropdownItem>
+        <DropdownItem key='i9' >
+            <NavLink to={{
+              'pathname': location.pathname,
+              // 'search': `category=${el}`
+            }} >
+            All Categories
+            </NavLink>
+          </DropdownItem>
+        {    
+          props.dropdown.map((el, i)=> {
+              return (
+                <DropdownItem key={i} >
+                  <NavLink to={{
+                    'pathname': location.pathname,
+                    'search': `category=${el}`
+                  }} >
+                  {el}
+                  </NavLink>
+                </DropdownItem>
+              )
+            })
+        }
         </DropdownMenu>
       </Dropdown>
     </Fragment>

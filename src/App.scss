@@ -6,6 +6,16 @@ body {
   background-color: #fafafa;
 }
 
+.sensors {
+  .card {
+    height: 100%;
+  }
+
+  .card-title {
+    font-size: 110%;
+  }
+}
+
 .smaller {
   font-size: 80%;
   font-weight: 300;

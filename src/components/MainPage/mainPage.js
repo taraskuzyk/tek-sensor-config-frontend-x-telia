@@ -48,13 +48,16 @@ const MainPage = (props) => {
             <h1>Tektelic Data Converter Tool</h1>
             <p>Select type of your device</p>
           </Col>
+          </Row>
+          <Row className="sensors">
           {
             selectAvailableSensors.map((el, i) => {
               return (
+
                       <Col sm={6} lg={4} xs={12} className="mt-3" key={i}>
                         <Card>
-                          <CardHeader>{el.name}</CardHeader>
-                          <CardImg src="https://place-hold.it/300x200" />
+                          <CardHeader className="smaller">{el.name}</CardHeader>
+                          <CardImg src={require(`@/app/img/${el.image}`)} />
                           <CardBody>
                             <CardTitle>{el.name}</CardTitle>
                             <p>{el.description}</p>

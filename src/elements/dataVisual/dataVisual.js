@@ -54,7 +54,13 @@ console.log('DV', sensorData, url)
   if (!currentTab) {
    return (
      <Fragment>
-       Sorry, sensor doesn't have this category.
+       <Container>
+         <Row>
+           <Col>
+            Sorry, sensor doesn't have this category.
+           </Col>
+         </Row>
+       </Container>
      </Fragment>
    ) 
   }
@@ -62,24 +68,25 @@ console.log('DV', sensorData, url)
     <Fragment>
       <Container className="mt-4">
         <Row>
-          <Col lg={10}>
+          <Col lg={9}>
           <span className="text-uppercase page-subtitle">Category</span>
           <h2>
             {currentTab}
           </h2>
           Lorem ipsum dolor sit amet.
           </Col>
-          <Col lg={2}>
-          {currentTab && <DropDown/>}
+          <Col lg={3}>
+          {currentTab && <DropDown dropdown={sensorData.dropdown}/>}
           </Col>
         </Row>
-
+      </Container>
+      <Container fluid>
         <Row>
           <Col sm={12} lg={12} xs={12} className="mt-4">
             <Card>
               <CardBody>
               <CardTitle>{currentTab}</CardTitle>
-                <Table/>
+                <Table sensorData={sensorData} params={params} />
               </CardBody>
               <CardFooter className="smaller">A payload should be sent on 100 port.</CardFooter>
               

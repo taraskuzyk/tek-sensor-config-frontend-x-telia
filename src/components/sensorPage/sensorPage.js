@@ -1,9 +1,16 @@
 import React, {Fragment, useEffect, useMemo} from 'react'
 import logo from '../../logo.svg'
 import {Counter} from '../../features/counter/Counter'
-import {Col, Row} from 'shards-react'
+import {
+  Container,
+  Col, 
+  Row,
+  Breadcrumb, 
+  BreadcrumbItem,
+} from 'shards-react'
 
 import {useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
 
 import {
   selectHomeSensor,
@@ -51,6 +58,19 @@ const SensorPage = (props) => {
   if (sensor_data) {
     return (
       <Fragment>
+        <Container>
+        <Row className="mb-4" style = {{'margin' : '0 -15px 20px -15px'}}>
+          <Col>
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <Link to="/">Home</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem active>Sensor</BreadcrumbItem>
+          </Breadcrumb>
+          </Col>
+        </Row>
+        
+        
         <Row>
           <Col sm={12} className="mb-2">
             <h2>{sensor_data.name}</h2>
@@ -64,6 +84,7 @@ const SensorPage = (props) => {
           </p>
           </Col>
         </Row>
+        </Container>
         <DataVisual sensorData={sensor_data} url={props.match} />
       </Fragment>
     )
@@ -72,6 +93,7 @@ const SensorPage = (props) => {
     return (
       <Fragment>
         <p>Sensor not found!</p>
+        <Link to="/">Back</Link>
       </Fragment>
     )
   }

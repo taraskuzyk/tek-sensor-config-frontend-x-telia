@@ -1,24 +1,24 @@
 [
   {
     "id": "homeSensorv3",
-    "name": "Tektelic All-in-One Home sensor v3",
+    "name": "Tektelic Home sensor v3",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
-    "image": "homeSensorv3",
+    "image": "homeSensorv3-1.png",
     "footer": "Pay attention on the version of your device"
 
   },
   {
     "id": "homeSensorv2",
-    "name": "Tektelic All-in-One Home sensor v2",
+    "name": "Tektelic Home sensor v2",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
-    "image": "homeSensorv2",
+    "image": "homeSensorv2.png",
     "footer": "Pay attention on the version of your device"
   },
   {
     "id": "industrialSensor",
     "name": "Tektelic Industrial Transceiver",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
-    "image": "homeSensorv2",
+    "image": "industrialTransceiver.png",
     "footer": ""
 
   },
@@ -26,7 +26,7 @@
     "id": "agriCulturalSensor",
     "name": "Tektelic Agricultural sensor",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
-    "image": "homeSensorv2",
+    "image": "agroSensor.png",
     "footer": ""
 
   },
@@ -34,7 +34,7 @@
     "id": "industrialTracker",
     "name": "Tektelic Industrial Tracker",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
-    "image": "homeSensorv2",
+    "image": "GPSTracker.png",
     "footer": ""
 
   },
@@ -42,7 +42,7 @@
     "id": "bleTracker",
     "name": "Tektelic BLE Tracker",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
-    "image": "homeSensorv2",
+    "image": "BLETracker.png",
     "footer": ""
 
   }
