@@ -5,6 +5,7 @@ import {Counter} from '../../features/counter/Counter'
 import PropTypes from 'prop-types'
 
 import {
+  Container,
   Col,
   Row,
   Card,
@@ -13,7 +14,9 @@ import {
   CardImg,
   CardBody,
   CardFooter,
-  Button
+  Button,
+  
+
 } from "shards-react";
 
 import {useDispatch, useSelector} from 'react-redux'
@@ -48,8 +51,8 @@ const MainPage = (props) => {
             <h1>Tektelic Data Converter Tool</h1>
             <p>Select type of your device</p>
           </Col>
-          </Row>
-          <Row className="sensors">
+        </Row>
+        <Row className="sensors">
           {
             selectAvailableSensors.map((el, i) => {
               return (
@@ -75,7 +78,7 @@ const MainPage = (props) => {
           }
             
         </Row>
-       
+        
       </Fragment>
     )
   }

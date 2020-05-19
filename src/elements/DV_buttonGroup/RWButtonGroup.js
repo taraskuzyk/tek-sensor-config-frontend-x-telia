@@ -25,7 +25,7 @@ import React, {useState, useMemo} from 'react'
 
     <ButtonGroup vertical>
     {[...element["Access"]].map((el, i) =>{
-      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} >{el}</Button>
+      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} size={"sm"} >{el}</Button>
     })}
     </ButtonGroup>
   )

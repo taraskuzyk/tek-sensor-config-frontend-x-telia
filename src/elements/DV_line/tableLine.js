@@ -10,16 +10,8 @@ import {
 
 import ButtonGroup from '@/elements/DV_buttonGroup/RWButtonGroup'
 import Tooltip from '@/elements/DV_Tooltip/tooltip'
+import Input from '@/elements/DV_Input/DVInput'
 
-
-{/* <TableLine
-        sensorData = {filteredData} 
-        params={props.params} 
-        category={category} 
-        element={filteredData} 
-        groupCounter={groupNameCounter(el)} 
-        key = {el}
-        /> */}
 
 
 
@@ -42,7 +34,7 @@ const TableLine = ({sensorData, params, element, category, groupCounter, groupNa
 
         if (groupName === 'single') {
           return (
-            <tr data-root={el["Category description"]} >
+            <tr data-root={el["Category description"]} key={el["Field name"]} >
             <th scope="row" style={{'opacity':'100%'}} >{el["Field description"]}</th>
             <td className="switcher">
               <FormCheckbox
@@ -56,7 +48,7 @@ const TableLine = ({sensorData, params, element, category, groupCounter, groupNa
               {/* <Tooltip element={element}/> */}
             </td>
             <td className={'tableLine ' + (activeLine && 'activeLine')}>
-              Value Input
+              <Input element = {el} activeLine = {activeLine}/>
             </td>
             <td className={'tableLine ' + (activeLine && 'activeLine')}>
               Comment section
@@ -69,7 +61,7 @@ const TableLine = ({sensorData, params, element, category, groupCounter, groupNa
         }
       
         return (
-          <tr data-root={el["Category description"]} >
+          <tr data-root={el["Category description"]} key={el["Field name"]}>
             <th scope="row" style={{'opacity':'100%'}} >{el["Field description"]}</th>
             {i === 0 && (
               <td rowSpan={sensorData.length} className="switcher">
@@ -87,14 +79,18 @@ const TableLine = ({sensorData, params, element, category, groupCounter, groupNa
               </td>
             )}
             <td className={'tableLine ' + (activeLine && 'activeLine')}>
-              Value Input
+              <Input element = {el} activeLine = {activeLine}/>
             </td>
             <td className={'tableLine ' + (activeLine && 'activeLine')}>
               Comment section
             </td>
-            <td className={'tableLine ' + (activeLine && 'activeLine')}>
+
+            {i === 0 && (
+              <td rowSpan={sensorData.length} className={'tableLine ' + (activeLine && 'activeLine')}>
               Results HEX/Base64
-            </td>
+              </td>
+            )}
+            
           </tr>
         )
       })} 

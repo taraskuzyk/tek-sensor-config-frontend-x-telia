@@ -92,8 +92,15 @@ const SensorPage = (props) => {
   else {
     return (
       <Fragment>
-        <p>Sensor not found!</p>
-        <Link to="/">Back</Link>
+        <Container>
+          <Row>
+            <Col>
+              <p>Sensor not found!</p>
+              <Link to="/">Back</Link>
+            </Col>
+          </Row>
+        </Container>
+        
       </Fragment>
     )
   }

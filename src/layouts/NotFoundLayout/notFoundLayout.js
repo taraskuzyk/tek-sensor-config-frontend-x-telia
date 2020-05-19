@@ -13,18 +13,21 @@ import {
 } from 'shards-react'
 
 
-import './mainLayout.scss'
+import './notFoundLayout.scss'
 
 import Navbar from '@elements/navbar/navbar'
 
 
 const Wrapper = styled.div`
-  height: 100%
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `
 
 
 
-export const MainLayout = (props) => {
+export const notFoundLayout = (props) => {
 
   return (
     <Wrapper >
@@ -38,7 +41,7 @@ export const MainLayout = (props) => {
         </Container>
         <Container className="mt-5 footer" fluid>
         <Col>
-        <Container>
+            <Container>
               <Col>
                 <Nav className="smaller">
                 <NavItem>
@@ -58,4 +61,4 @@ export const MainLayout = (props) => {
 
 }
 
-export default MainLayout
+export default notFoundLayout

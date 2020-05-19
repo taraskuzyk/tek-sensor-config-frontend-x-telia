@@ -1,4 +1,4 @@
-import data from '../convertcsv.json'
+import data from './homeSensorv3.json'
 
 import { createSlice } from '@reduxjs/toolkit';
 import _ from 'lodash'

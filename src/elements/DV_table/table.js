@@ -97,17 +97,6 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-      {/* {
-        data.map((el, i)=>{
-          return <TableLine 
-          sensorData = {data} 
-          params={props.params} 
-          category={category} 
-          element={el} 
-          groupCounter={groupNameCounter(el)} 
-          key = {el["Field name"]} />
-        })
-      } */}
 
         {filterGroupName()}
       </tbody>

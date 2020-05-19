@@ -6,6 +6,8 @@ import MainPage from '../../components/MainPage/mainPage'
 
 
 import notFound from '../../components/404/404'
+import notFoundLayout from '@/layouts/NotFoundLayout/notFoundLayout'
+
 import SensorPage from '../../components/sensorPage/sensorPage'
 import SensorLayout from '@/layouts/SensorLayout/sensorLayout'
 
@@ -26,7 +28,7 @@ export const Routes = () => {
     <Switch>
       <AppRoute exact path='/' layout={MainLayout} component={MainPage} />
       <AppRoute exact path='/sensor/:id' layout={SensorLayout} component={SensorPage} />
-      <AppRoute layout={MainLayout} component={notFound} />
+      <AppRoute layout={notFoundLayout} component={notFound} />
     </Switch>
   )
 

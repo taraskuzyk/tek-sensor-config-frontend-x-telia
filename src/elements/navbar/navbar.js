@@ -53,7 +53,7 @@ export default (props) => {
       <NavbarToggler onClick={toggleNavbar} />
 
       <Collapse open={collapseOpen} navbar className="justify-content-end mr-lg-2 mr-sm-0">
-        <Nav navbar>
+        {/* <Nav navbar>
           <NavItem>
             <NavLink to="/" className="nav-link active">
               Home
@@ -63,7 +63,7 @@ export default (props) => {
             <NavLink1 to="#" disabled>
               Disabled
             </NavLink1>
-          </NavItem>
+          </NavItem> */}
           {/* <Dropdown
             open={dropdownOpen}
             toggle={toggleDropdown}
@@ -77,7 +77,9 @@ export default (props) => {
               <DropdownItem>Something else here</DropdownItem>
             </DropdownMenu>
           </Dropdown> */}
-        </Nav>
+
+
+        {/* </Nav> */}
 
         {/* <Nav navbar className="ml-2">
           <InputGroup size="sm" seamless>
