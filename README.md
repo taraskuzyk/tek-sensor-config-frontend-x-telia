@@ -1,5 +1,10 @@
+TEKTELIC react-based sensor converter SPA application - 2020
+
+
+
 ## Features
-Custom reactRedux boilerplate based on create-react-app (3.3.1) + https://redux-toolkit.js.org/ and custom webpack config (config-overrides.js).
+My custom reactRedux boilerplate based on create-react-app (3.3.1) + https://redux-toolkit.js.org/ and custom webpack config (config-overrides.js).
+
 
 ### Added list:
 
