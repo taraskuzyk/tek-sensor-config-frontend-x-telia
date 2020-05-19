@@ -2,12 +2,13 @@ import React, {useMemo} from 'react'
 import _ from 'lodash'
 
 import TableLine from '@elements/DV_line/tableLine'
+import { Fragment } from 'react'
 
 
 const Table = (props) => {
 
   const groupNameCounter = (el)=>{
-    console.log('111', el)
+    // console.log('111', el)
     if (!el) {
       return
     }
@@ -40,25 +41,48 @@ const Table = (props) => {
   const filterGroupName = () => {
     const unique = [...new Set(data.map(item => item['Group name']))];
     console.log('aaaa', unique)
-    unique.map((el) => {
+
+   const a = unique.map((el) => {
       const filteredData = data.filter((dataElement)=> {
         return dataElement["Group name"] === el
       })
-      console.log('000', filteredData)
       
+      console.log(`all elements from data for ${el || "_"}`, filteredData)
+      
+      if(el === "") {
+        console.log('Найдено!!!')
+        return (
+          
+          filteredData.map((FD)=> {
+          return <TableLine
+            sensorData = {[FD]} 
+            params={props.params} 
+            category={category} 
+            element={[FD]}
+            groupName = "single" 
+            groupCounter= {0} 
+            key = {FD["Field name"]}
+            />
+        })
+          
+        )
+      }
+
       return <TableLine
         sensorData = {filteredData} 
         params={props.params} 
         category={category} 
-        element={filteredData} 
+        element={filteredData}
+        groupName = {el} 
         groupCounter={groupNameCounter(el)} 
         key = {el}
         />
     }
-
     )
+    console.log('bbb', a)
+    return a 
   }
-  filterGroupName()
+
 
   return (
     <table className="table mb-0">
@@ -73,7 +97,7 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-      {
+      {/* {
         data.map((el, i)=>{
           return <TableLine 
           sensorData = {data} 
@@ -83,7 +107,9 @@ const Table = (props) => {
           groupCounter={groupNameCounter(el)} 
           key = {el["Field name"]} />
         })
-      }
+      } */}
+
+        {filterGroupName()}
       </tbody>
     </table>
   )

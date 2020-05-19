@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useMemo} from 'react'
  import {
   Button,
   ButtonGroup,
@@ -7,19 +7,25 @@ import React, {useState} from 'react'
 
  const RWButtonGroup = ({element, activeLine}) => {
 
-  const [state, setState] = useState(false)
+  const [state, setState] = useState([...element["Access"]][0])
+  const [active, setActive] = useState(false)
 
   const clickHandler = async (el, e) => {
     e.preventDefault()
     await setState(el)
-
-    console.log(state);
     
   }
+  // useMemo(()=> {
+  //   ([...element["Access"]].length === 1) && setState([...element["Access"]][0])
+  // }, [element, setState])
+  
+
   return (
+    
+
     <ButtonGroup vertical>
     {[...element["Access"]].map((el, i) =>{
-      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el}>{el}</Button>
+      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} >{el}</Button>
     })}
     </ButtonGroup>
   )
