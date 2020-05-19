@@ -4,6 +4,8 @@ import homeSensorv3Reducer from '@features/homeSensorv3/homeSensorv3.js'
 import availableSensors from '@features/availableSensors/availableSensors.js'
 import industrialSensorReducer from '@features/industrialSensor/industrialSensor'
 import agriculturalSensor from '@features/agriculturalSensor/agriculturalSensor'
+import industrialTracker from '@features/industrialTracker/industrialTracker'
+import bookingPlatform from '@features/bookingTablet/bookingTablet'
 
 
 export default configureStore({
@@ -13,5 +15,7 @@ export default configureStore({
     homeSensorv3: homeSensorv3Reducer,
     industrialSensor: industrialSensorReducer,
     agriculturalSensor: agriculturalSensor,
+    industrialTracker: industrialTracker,
+    bookingPlatform: bookingPlatform
   },
 });

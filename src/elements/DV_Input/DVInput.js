@@ -12,11 +12,11 @@ const Input = ({element, activeLine}) => {
         return ((/^(Opt)[0-9]{1,2}$/.test(el)) && element[el] !== '')
     })
     .map((el,i )=>{
-        console.log('689', el.substr(3), element[`Val` + el.substr(3)])
+        // console.log('689', el.substr(3), element[`Val` + el.substr(3)])
         return [[element[el]], element[`Val` + el.substr(3)]]
     })
 
-    console.log('66', options)
+    // console.log('66', options)
 
     if(write) {
         if(options.length){
@@ -38,7 +38,7 @@ const Input = ({element, activeLine}) => {
             
         }
         else {
-            return <FormInput size="sm" placeholder="Small input" className="mb-2" />
+            return <FormInput size="sm" placeholder={element["Field description"]} className="mb-2" />
         }
         
     

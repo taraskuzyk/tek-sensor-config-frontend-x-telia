@@ -39,6 +39,14 @@
 
   },
   {
+    "id": "bookingPlatform",
+    "name": "TEKTELIC Meeting Room Booking Tablet",
+    "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
+    "image": "bookingPlatform.png",
+    "footer": ""
+
+  },
+  {
     "id": "bleTracker",
     "name": "Tektelic BLE Tracker",
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
