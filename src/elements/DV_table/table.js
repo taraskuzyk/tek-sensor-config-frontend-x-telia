@@ -19,6 +19,9 @@ const Table = (props) => {
     }).true
   }
 
+  
+
+
   const category = props.params.has('category') ? props.params.get('category') : 'all'
   const data = useMemo(()=>{
     
@@ -33,6 +36,29 @@ const Table = (props) => {
     })
 
   }, [props.sensorData, category])
+
+  const filterGroupName = () => {
+    const unique = [...new Set(data.map(item => item['Group name']))];
+    console.log('aaaa', unique)
+    unique.map((el) => {
+      const filteredData = data.filter((dataElement)=> {
+        return dataElement["Group name"] === el
+      })
+      console.log('000', filteredData)
+      
+      return <TableLine
+        sensorData = {filteredData} 
+        params={props.params} 
+        category={category} 
+        element={filteredData} 
+        groupCounter={groupNameCounter(el)} 
+        key = {el}
+        />
+    }
+
+    )
+  }
+  filterGroupName()
 
   return (
     <table className="table mb-0">
@@ -55,7 +81,7 @@ const Table = (props) => {
           category={category} 
           element={el} 
           groupCounter={groupNameCounter(el)} 
-          key = {i} />
+          key = {el["Field name"]} />
         })
       }
       </tbody>

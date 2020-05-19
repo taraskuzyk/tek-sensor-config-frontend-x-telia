@@ -4,9 +4,12 @@ import './tableLine.scss'
 
 import {
   FormCheckbox,
-  Button,
-  ButtonGroup,
+  // Button,
+  // ButtonGroup,
 } from 'shards-react'
+
+import ButtonGroup from '@/elements/DV_buttonGroup/RWButtonGroup'
+import Tooltip from '@/elements/DV_Tooltip/tooltip'
 
 
 const TableLine = ({sensorData, params, element, category, groupCounter}) => {
@@ -17,16 +20,14 @@ const TableLine = ({sensorData, params, element, category, groupCounter}) => {
   }
 
   
-  console.log('tableline', sensorData, params, category );
-
-  console.log('rw:', element["Access"].length)
+  // console.log('tableline', sensorData, params, category );
   
   
   return (
     <Fragment>
       {
           <tr data-root={element["Category description"]} className={'tableLine ' + (activeLine && 'activeLine')}>
-            <th scope="row">{element["Field description"]}</th>
+            <th scope="row" style={{'opacity':'100%'}} >{element["Field description"]}</th>
             <td rowSpan={element["Group name"] && groupCounter} className="switcher">
               <FormCheckbox
               toggle
@@ -35,11 +36,8 @@ const TableLine = ({sensorData, params, element, category, groupCounter}) => {
               />
             </td>
             <td rowSpan={element["Group name"] && groupCounter} className="">
-              <ButtonGroup vertical>
-                {[...element["Access"]].map((el) =>{
-                  return <Button disabled={!activeLine}>{el}</Button>
-                })}
-              </ButtonGroup>
+              <ButtonGroup element = {element} activeLine = {activeLine}/>
+              {/* <Tooltip element={element}/> */}
             </td>
           </tr>
       }
