@@ -10,7 +10,7 @@ import bookingPlatform from '@features/bookingTablet/bookingTablet'
 
 export default configureStore({
   reducer: {
-    // counter: counterReducer,
+    //counter: counterReducer,
     availableSensors: availableSensors,
     homeSensorv3: homeSensorv3Reducer,
     industrialSensor: industrialSensorReducer,

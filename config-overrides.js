@@ -46,10 +46,6 @@ module.exports = function override(config, env) {
   config = postCSS(config/*, options */)
   return config;
 }
-
-
-
-console.log('233232')
 // module.exports = {
 //   entry: './src/index.js',
 //   output: {

@@ -1,11 +1,9 @@
 import React, {Fragment, useEffect, useMemo} from 'react'
-import logo from '../../logo.svg'
-import {Counter} from '../../features/counter/Counter'
 import {
   Container,
-  Col, 
+  Col,
   Row,
-  Breadcrumb, 
+  Breadcrumb,
   BreadcrumbItem,
 } from 'shards-react'
 
@@ -13,24 +11,14 @@ import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 
 import {
-  selectHomeSensor,
-  selectHomeSensorDescription,
-  selectHomeSensorCategories,
-  sensorSelector,
-  selectAllState as state,
-} from '@features/homeSensorv3/homeSensorv3.js'
-
-import {
-  selectAvailableSensors as selAvSensor
+  selectAvailableSensors as selAvSensor,
+  selectAllState as state
 } from '@features/availableSensors/availableSensors.js'
 
 import DataVisual from '@/elements/dataVisual/dataVisual.js'
 
 const SensorPage = (props) => {
 
-  const selectDescription = useSelector(selectHomeSensorDescription)
-  const selectCategories = useSelector(selectHomeSensorCategories)
-  const selectHomeSensorState = useSelector(selectHomeSensor)
   const selectAvailableSensors = useSelector(selAvSensor)
   const selectAllState = useSelector(state)
 
@@ -42,9 +30,9 @@ const SensorPage = (props) => {
     else {
       console.log('ID не найден')
       return null
-  
+
     }
-    
+
   }, [props.match.params.id, selectAllState])
 
   console.log('URL params', props.match.params) // parameter in the URL
@@ -65,12 +53,12 @@ const SensorPage = (props) => {
             <BreadcrumbItem>
               <Link to="/">Home</Link>
             </BreadcrumbItem>
-            <BreadcrumbItem active>Sensor</BreadcrumbItem>
+            <BreadcrumbItem active>{sensor_data.name}</BreadcrumbItem>
           </Breadcrumb>
           </Col>
         </Row>
-        
-        
+
+
         <Row>
           <Col sm={12} className="mb-2">
             <h2>{sensor_data.name}</h2>
@@ -100,7 +88,7 @@ const SensorPage = (props) => {
             </Col>
           </Row>
         </Container>
-        
+
       </Fragment>
     )
   }

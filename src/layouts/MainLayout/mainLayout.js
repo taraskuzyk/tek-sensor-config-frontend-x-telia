@@ -4,11 +4,11 @@ import styled from 'styled-components'
 import {NavLink as RNavLink, Link} from 'react-router-dom'
 
 import {
-  Col, 
-  Row, 
+  Col,
+  Row,
   Container,
-  Nav, 
-  NavItem, 
+  Nav,
+  NavItem,
   NavLink,
 } from 'shards-react'
 
@@ -21,8 +21,6 @@ import Navbar from '@elements/navbar/navbar'
 const Wrapper = styled.div`
   height: 100%
 `
-
-
 
 export const MainLayout = (props) => {
 
@@ -52,7 +50,7 @@ export const MainLayout = (props) => {
             </Container>
           </Col>
         </Container>
-      
+
     </Wrapper>
   )
 

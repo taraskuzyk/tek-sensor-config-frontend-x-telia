@@ -13,19 +13,18 @@ import React, {useState, useMemo} from 'react'
   const clickHandler = async (el, e) => {
     e.preventDefault()
     await setState(el)
-    
+
   }
   // useMemo(()=> {
   //   ([...element["Access"]].length === 1) && setState([...element["Access"]][0])
   // }, [element, setState])
-  
+
 
   return (
-    
 
     <ButtonGroup vertical>
     {[...element["Access"]].map((el, i) =>{
-      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} size={"sm"} >{el}</Button>
+      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} size={"sm"} >{el === "R" ? "Read" : "Write"}</Button>
     })}
     </ButtonGroup>
   )
