@@ -27,10 +27,4 @@ export const homeSensorv3Slice = createSlice({
   }
 })
 
-
-
-export const selectHomeSensor = state => state.homeSensorv3;
-export const selectHomeSensorDescription = state => state.homeSensorv3.description
-export const selectHomeSensorCategories = state => state.homeSensorv3.categories
-
 export default homeSensorv3Slice.reducer;

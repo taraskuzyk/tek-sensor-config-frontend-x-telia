@@ -24,13 +24,10 @@ const SensorPage = (props) => {
 
   const sensor_data = useMemo(()=> {
     if (props.match.params.id in selectAllState) {
-      console.log('ID найден')
       return selectAllState[props.match.params.id]
     }
     else {
-      console.log('ID не найден')
       return null
-
     }
 
   }, [props.match.params.id, selectAllState])

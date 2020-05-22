@@ -1,16 +1,20 @@
-import React, {useMemo} from 'react'
+import React, {useMemo, useState} from 'react'
 import _ from 'lodash'
 import TableLine from '@elements/DV_line/tableLine'
 
 const Table = (props) => {
 
-  const groupNameCounter = (el) =>{
-    if (!el) {
-      return
+  const [downlink, setDownlink] = useState({})
+
+  const handleDownlinkChange = (sensorData, group, field, value) => {
+    let newDownlink = downlink;
+    if (group === "single"){
+      if (downlink.hasOwnProperty(field)){
+
+      }
     }
-    return _.countBy(props.sensorData.data, (rec)=>{
-        return el["Group name"] === rec["Group name"]
-    }).true
+    newDownlink[field] = value;
+    setDownlink(newDownlink);
   }
 
   const category = props.params.has('category') ? props.params.get('category') : 'all'
@@ -26,43 +30,31 @@ const Table = (props) => {
 
   }, [props.sensorData, category])
 
-  const filterGroupName = () => {
+  const tableLines = () => { // the process of selecting the right data can be more readable.
     const unique = [...new Set(data.map(item => item['Group name']))];
 
-    const a = unique.map((el) => {
-      const filteredData = data.filter((dataElement)=> {
-        return dataElement["Group name"] === el
-      })
+    return unique.map((group) => {
+          const groupData = data.filter((dataElement)=> {
+            return dataElement["Group name"] === group
+          })
 
-      if(el === "") {
-        return (
-          filteredData.map((FD)=> {
+          if(group === "") {
+            return (
+                groupData.map((data)=> {
+                  return <TableLine
+                      groupData = {[data]}
+                      key = {data["Field name"]}
+                  />
+                })
+            )
+          }
+
           return <TableLine
-            sensorData = {[FD]}
-            params={props.params}
-            category={category}
-            element={[FD]}
-            groupName = "single"
-            groupCounter= {0}
-            key = {FD["Field name"]}
-            />
-        })
-
-        )
-      }
-
-      return <TableLine
-        sensorData = {filteredData}
-        params={props.params}
-        category={category}
-        element={filteredData}
-        groupName = {el}
-        groupCounter={groupNameCounter(el)}
-        key = {el}
-        />
-    }
+              groupData = {groupData}
+              key = {group}
+          />
+        }
     )
-    return a
   }
 
 
@@ -79,8 +71,7 @@ const Table = (props) => {
         </tr>
       </thead>
       <tbody>
-
-        {filterGroupName()}
+        {tableLines()}
       </tbody>
     </table>
   )

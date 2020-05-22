@@ -8,7 +8,6 @@ export const availableSensors = createSlice({
   }
 })
 
-
 export const selectAvailableSensors = state => state.availableSensors;
 export const selectAllState = state => state
 

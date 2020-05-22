@@ -13,11 +13,15 @@ const Input = ({element, activeLine, onChange}) => {
         return [[element[el]], element[`Val` + el.substr(3)]]
     })
 
+    const handleChange = (e) => {
+        onChange(element, e.target.value)
+    }
+
     if(write) {
         if(options.length){
             return (
                 <Fragment>
-                    <FormSelect size="sm" disabled={!activeLine} onChange = {onChange}>
+                    <FormSelect size="sm" disabled={!activeLine} onChange = {handleChange}>
                     {options.map((el)=>{
                         return (
                             <option value={el[1]} key={el[0]}>{el[0]}</option>
@@ -28,16 +32,14 @@ const Input = ({element, activeLine, onChange}) => {
             )
         }
         else {
-            return <FormInput size="sm" placeholder={element["Field description"]} className="mb-2" onChange = {onChange}/>
+            return <FormInput size="sm" placeholder={element["Field description"]} className="mb-2" onChange = {handleChange}/>
         }
     }
 
     else {
         return (
             <Fragment>
-                <p className="smaller">
-                    Read only
-                </p>
+
             </Fragment>
         )
     }

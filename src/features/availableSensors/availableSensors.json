@@ -5,7 +5,6 @@
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
     "image": "homeSensorv3-1.png",
     "footer": "Pay attention to the version of your device"
-
   },
   {
     "id": "homeSensorv2",
@@ -20,7 +19,6 @@
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
     "image": "industrialTransceiver.png",
     "footer": ""
-
   },
   {
     "id": "agriculturalSensor",
@@ -28,7 +26,6 @@
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
     "image": "agroSensor.png",
     "footer": ""
-
   },
   {
     "id": "industrialTracker",
@@ -36,7 +33,6 @@
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
     "image": "GPSTracker.png",
     "footer": ""
-
   },
   {
     "id": "bookingPlatform",
@@ -44,7 +40,6 @@
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
     "image": "bookingPlatform.png",
     "footer": ""
-
   },
   {
     "id": "bleTracker",
@@ -52,6 +47,5 @@
     "description": "Lorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consecteturLorem ipsum dolor sit amet consectetur",
     "image": "BLETracker.png",
     "footer": ""
-
   }
 ]

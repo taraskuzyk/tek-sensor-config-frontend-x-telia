@@ -5,7 +5,7 @@ import React, {useState, useMemo} from 'react'
  } from 'shards-react'
 
 
- const RWButtonGroup = ({element, activeLine}) => {
+const RWButtonGroup = ({element, activeLine, onChange}) => {
 
   const [state, setState] = useState([...element["Access"]][0])
   const [active, setActive] = useState(false)
@@ -13,7 +13,7 @@ import React, {useState, useMemo} from 'react'
   const clickHandler = async (el, e) => {
     e.preventDefault()
     await setState(el)
-
+    onChange(element, el)
   }
   // useMemo(()=> {
   //   ([...element["Access"]].length === 1) && setState([...element["Access"]][0])

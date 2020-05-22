@@ -7,26 +7,22 @@ NavItem,
 NavLink
 } from 'shards-react'
 
-
 import './sensorLayout.scss'
 
 import Navbar from '@elements/navbar/navbar'
 
-
 const Wrapper = styled.div`
   height: 100%
 `
-
-
 
 export const SensorLayout = (props) => {
 
   return (
     <Wrapper >
         <Navbar />
-        
+
             { props.children }
-            
+
             <Container className="mt-5">
               <Col>
                 <Nav className="smaller">
@@ -39,7 +35,7 @@ export const SensorLayout = (props) => {
                 </Nav>
               </Col>
             </Container>
-      
+
     </Wrapper>
   )
 
