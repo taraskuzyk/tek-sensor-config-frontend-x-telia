@@ -1,6 +1,9 @@
 import React, {Fragment, useState} from 'react'
 
-import {Tooltip as Tip} from "shards-react";
+import { Tooltip as Tip, Button } from "shards-react";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
+
 
 
 const Tooltip = (props) => {
@@ -9,7 +12,7 @@ const Tooltip = (props) => {
 
   const toggleHandler = () => {
     setState(!state)
-  }
+  } 
 
   return (
     <Fragment>

@@ -1,24 +1,28 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useMemo, useState} from 'react'
 
 import './tableLine.scss'
 
-import {FormCheckbox,} from 'shards-react'
+import {
+  FormCheckbox,
+  // Button,
+  // ButtonGroup,
+} from 'shards-react'
 
-import ButtonGroup from '@/elements/ButtonGroup/RWButtonGroup'
+import ButtonGroup from '@/elements/DV_buttonGroup/RWButtonGroup'
+//import Tooltip from '@/elements/DV_Tooltip/tooltip'
 import Input from '@/elements/DV_Input/DVInput'
 import encode_data from '@/features/homeSensorv3/downlink_home_sensor'
 
 const TableLine = ({groupData, params}) => {
-  let downlinkRead = {};
-  let downlinkWrite = {};
+  console.log("groupData");
+  console.log(groupData);
   const [activeLine, setActiveLine] = useState(false)
-  const [RW, setRW] = useState("R")
-  const [payload, setPayload] = useState(encode_data(downlinkRead))
-
   const activeLineHandler = () => {
     setActiveLine(!activeLine)
   }
 
+  let downlinkRead = {};
+  let downlinkWrite = {};
   //setting initial conditions for downlinkRead and downlinkWrite
   if (groupData[0]["Group name"] !== "") {
     downlinkRead[groupData[0]["Group name"]] = {"read": true};
@@ -31,8 +35,13 @@ const TableLine = ({groupData, params}) => {
     downlinkWrite[groupData[0]["Field name"]] = {"write": 0};
   }
 
+  const [RW, setRW] = useState("R")
+  const [payload, setPayload] = useState(encode_data(downlinkRead))
+
+
   const handleRW = (element, value) => {
     setRW(value);
+
     if (value === "R") {
       console.log(downlinkRead)
       setPayload(encode_data(downlinkRead))
@@ -67,10 +76,14 @@ const TableLine = ({groupData, params}) => {
               </td>
               <td className={'tableLine ' + (activeLine && 'activeLine')}>
                 <ButtonGroup element = {el} activeLine = {activeLine} onChange={handleRW}/>
+                {/* <Tooltip element={element}/> */}
               </td>
               <td className={'tableLine ' + (activeLine && 'activeLine')}>
                 {RW === "W" && <Input element = {el} activeLine = {activeLine} onChange={handleInput}/>}
               </td>
+              {/*<td className={'tableLine ' + (activeLine && 'activeLine')}>
+                Comment section
+              </td>*/}
               <td className={'tableLine ' + (activeLine && 'activeLine')}>
                 {payload}
               </td>
@@ -93,11 +106,15 @@ const TableLine = ({groupData, params}) => {
             {i === 0 && (
               <td rowSpan={groupData.length} className={'tableLine ' + (activeLine && 'activeLine')}>
               <ButtonGroup element = {el} activeLine = {activeLine} onChange={handleRW}/>
+              {/* <Tooltip element={element}/> */}
               </td>
             )}
             <td className={'tableLine ' + (activeLine && 'activeLine')}>
               {RW === "W" && <Input element = {el} activeLine = {activeLine} onChange={handleInput}/>}
             </td>
+            {/*<td className={'tableLine ' + (activeLine && 'activeLine')}>
+              Comment section
+            </td>*/}
 
             {i === 0 && (
               <td rowSpan={groupData.length} className={'tableLine ' + (activeLine && 'activeLine')}>

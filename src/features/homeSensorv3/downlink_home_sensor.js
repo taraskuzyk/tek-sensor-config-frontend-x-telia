@@ -553,6 +553,48 @@ export default function encode_data(data) {
             ret = ret.concat(ret, [ 0x71 ])
         }
     );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
     check_encode("configuration_factory_reset",
         function(value) {
             var converted = [0x72 | 0x80,

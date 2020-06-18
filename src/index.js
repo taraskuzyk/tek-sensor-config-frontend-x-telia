@@ -2,18 +2,27 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
+import store from '@store';
+import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
 
+
+
 import {BrowserRouter} from 'react-router-dom'
 
+
 ReactDOM.render(
-    <BrowserRouter>
+  // <React.StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>
         <App />
-    </BrowserRouter>,
-    document.getElementById("root")
+      </BrowserRouter>
+    </Provider>,
+  // </React.StrictMode>,
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
