@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react'
-import _ from 'lodash'
-import TableLine from '@elements/DV_line/tableLine'
+import TableLine from '@elements/DownlinkTableLine/tableLine'
 
 const Table = (props) => {
 
@@ -62,12 +61,11 @@ const Table = (props) => {
     <table className="table mb-0">
       <thead className="bg-light">
         <tr className="smaller">
-          <th scope="col" className="border-0">Label</th>
-          <th scope="col" className="border-0"></th>
-          <th scope="col" className="border-0"></th>
-          <th scope="col" className="border-0">Value</th>
-          {/*<th scope="col" className="border-0">Comment</th>*/}
-          <th scope="col" className="border-0">Result</th>
+          <th scope="col" className="border-0" style = {{width: "30%"}}>Label</th>
+          <th scope="col" className="border-0" style = {{width: "10%"}}></th>
+          <th scope="col" className="border-0" style = {{width: "10%"}}></th>
+          <th scope="col" className="border-0" style = {{width: "30%"}}>Value</th>
+          <th scope="col" className="border-0" style = {{width: "20%"}}>Base 64 Payload</th>
         </tr>
       </thead>
       <tbody>

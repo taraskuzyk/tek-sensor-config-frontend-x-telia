@@ -1,6 +1,6 @@
 {
-  "name": "sensorappreact",
-  "version": "0.1.0",
+  "name": "tek-sensor-config-frontend",
+  "version": "0.0.1",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.28",
@@ -24,10 +24,11 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "shards-react": "^1.0.3",
+    "socket.io-client": "^2.3.0",
     "styled-components": "^5.1.0"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "PORT=1337 react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"

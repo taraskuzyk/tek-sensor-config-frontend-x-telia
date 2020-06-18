@@ -1,74 +1,51 @@
-import React, {useState, Fragment} from 'react'
+import React, {Fragment, useState} from 'react'
 
 import './dropdown.scss'
 
-import {
-  Dropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  Button
-} from "shards-react";
-
-
-import { 
-  useParams,
-  useRouteMatch,
-  useLocation, 
-  NavLink
-} from "react-router-dom"
-
+import {Dropdown, DropdownItem, DropdownMenu, DropdownToggle} from "shards-react";
+import {NavLink, useLocation, useHistory} from "react-router-dom"
 
 
 const DV_Dropdown = (props) => {
-  const [open, setOpen] = useState(false)
+    const [open, setOpen] = useState(false)
 
-  const search = useLocation().search;
-  const location = useLocation()
-  const params = new URLSearchParams(search)  
+    const history = useHistory()
+    const search = useLocation().search;
+    const location = useLocation()
+    const params = new URLSearchParams(search)
+    const currentTab = params.has('category') ? params.get('category') : 'All Categories'
 
-  const currentTab = params.has('category') ? params.get('category') : 'Select Category'
-  console.log('currentTab:22', props.dropdown, currentTab)
-  
-  
+    const handler = () => {
+        setOpen(!open)
+    }
 
-  const handler = () => {
-    setOpen(!open)
-  }
-
-  return (
-    <Fragment>
-      <Dropdown open={open} toggle={handler}>
-      <DropdownToggle className="dropdown-toggle ">
-        {currentTab}
-      </DropdownToggle>
-        <DropdownMenu>
-        <DropdownItem key='i9' >
-            <NavLink to={{
-              'pathname': location.pathname,
-              // 'search': `category=${el}`
-            }} >
-            All Categories
-            </NavLink>
-          </DropdownItem>
-        {    
-          props.dropdown.map((el, i)=> {
-              return (
-                <DropdownItem key={i} >
-                  <NavLink to={{
-                    'pathname': location.pathname,
-                    'search': `category=${el}`
-                  }} >
-                  {el}
-                  </NavLink>
-                </DropdownItem>
-              )
-            })
-        }
-        </DropdownMenu>
-      </Dropdown>
-    </Fragment>
-  )
+    return (
+        <Fragment>
+            <Dropdown open={open} toggle={handler} size = 'lg'>
+                <DropdownToggle className="dropdown-toggle ">
+                    {currentTab}
+                </DropdownToggle>
+                <DropdownMenu>
+                    <DropdownItem key='i9' onClick = {()=>history.push(location.pathname)}>
+                        <div style={{fontSize: 20}}>
+                            All Categories
+                        </div>
+                    </DropdownItem>
+                    {
+                        props.dropdown.map((el, i)=> {
+                            return (
+                                <DropdownItem key={i} onClick = {()=>history.push(location.pathname+"?"+`category=${el}`)}>
+                                    <div style={{fontSize: 20}}>
+                                        {el}
+                                    </div>
+                                </DropdownItem>
+                            )
+                        })
+                    }
+                </DropdownMenu>
+            </Dropdown>
+        </Fragment>
+    )
 }
 
 

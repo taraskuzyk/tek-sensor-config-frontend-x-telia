@@ -1,8 +1,5 @@
-import React, {useState, useMemo} from 'react'
- import {
-  Button,
-  ButtonGroup,
- } from 'shards-react'
+import React, {useState} from 'react'
+import {Button, ButtonGroup,} from 'shards-react'
 
 
 const RWButtonGroup = ({element, activeLine, onChange}) => {
