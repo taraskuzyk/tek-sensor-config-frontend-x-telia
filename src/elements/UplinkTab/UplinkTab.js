@@ -1,5 +1,5 @@
 import React, {Fragment, useMemo, useState, useEffect} from 'react'
-import {Card, CardText, Col, Container, Row} from "shards-react";
+import {Card, CardText, CardHeader, Col, Container, Row} from "shards-react";
 import ItemList from "../ItemList/ItemList";
 import _ from 'lodash'
 
@@ -12,6 +12,7 @@ export default function UplinkTab({messages}){
     const [activeDevice, setActiveDevice] = useState()
     const [activeTimestamp, setActiveTimestamp] = useState()
     const [displayNetwork, setDisplayNetwork] = useState("")
+    const [displayPayload, setDisplayPayload] = useState("")
 
 
     const handleDeviceClick = (message) => {
@@ -26,6 +27,7 @@ export default function UplinkTab({messages}){
                 2
             )
         )
+
     }
 
     useEffect(()=>{
@@ -35,6 +37,13 @@ export default function UplinkTab({messages}){
             setDisplayNetwork(
                 JSON.stringify(
                     messages[0].raw,
+                    null,
+                    2
+                )
+            )
+            setDisplayPayload(
+                JSON.stringify(
+                    messages[0].decoded,
                     null,
                     2
                 )
@@ -49,8 +58,11 @@ export default function UplinkTab({messages}){
         <Fragment>
             <Container fluid>
                 <Row>
-                    <Col sm={12} lg={3} xs={12}>
+                    <Col sm={12} lg={2} xs={12}>
                         <Card>
+                            <CardHeader>
+                                Device EUI
+                            </CardHeader>
                             {devices.length > 0 ?
                                 <ItemList
                                     items = {devices}
@@ -63,8 +75,12 @@ export default function UplinkTab({messages}){
                             }
                         </Card>
                     </Col>
-                    <Col sm={12} lg={3} xs={12}>
+
+                    <Col sm={12} lg={2} xs={12}>
                         <Card>
+                            <CardHeader>
+                                Date
+                            </CardHeader>
                             {activeDevice!==null && activeDevice!==undefined ?
                                 <ItemList
                                     items = {
@@ -94,12 +110,27 @@ export default function UplinkTab({messages}){
                             }
                         </Card>
                     </Col>
-                    <Col sm={12} lg={6} xs={12}>
-                        {/*TODO: this will cause issues at scale, as two uplinks can come in one timestamp. Rework*/}
+                    <Col sm={12} lg={4} xs={12}>
+
                         <Card>
+                            <CardHeader>
+                                Network Layer
+                            </CardHeader>
                             <CardText>
                                 <pre>
                                     {displayNetwork}
+                                </pre>
+                            </CardText>
+                        </Card>
+                    </Col>
+                    <Col sm={12} lg={4} xs={12}>
+                        <Card>
+                            <CardHeader>
+                                Decoded Payload
+                            </CardHeader>
+                            <CardText>
+                                <pre>
+                                    {displayPayload}
                                 </pre>
                             </CardText>
                         </Card>
