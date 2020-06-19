@@ -1,37 +1,27 @@
 import React from 'react'
-import styled from 'styled-components'
+//import styled from 'styled-components'
 
-import {NavLink as RNavLink, Link} from 'react-router-dom'
-
-import {
-  Col, 
-  Row, 
-  Container,
-  Nav, 
-  NavItem, 
-  NavLink,
-} from 'shards-react'
+import {Col, Container, Nav, NavItem, Row,} from 'shards-react'
 
 
 import './notFoundLayout.scss'
 
-import Navbar from '@elements/navbar/navbar'
+import Navbar from '../../elements/Navbar/navbar'
 
 
-const Wrapper = styled.div`
+/*const Wrapper = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-`
+`*/
 
 
 
 export const notFoundLayout = (props) => {
 
   return (
-    <Wrapper >
-        <Navbar />
+    <div style={{minHeight: "100vh", display: "flex", flexDirection: "column", justifyContent: "space-between"}} >
         <Container>
           <Row>
             <Col>
@@ -55,8 +45,8 @@ export const notFoundLayout = (props) => {
             </Container>
           </Col>
         </Container>
-      
-    </Wrapper>
+
+    </div>
   )
 
 }

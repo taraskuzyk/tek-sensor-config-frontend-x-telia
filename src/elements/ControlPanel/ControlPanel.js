@@ -116,18 +116,6 @@ export default function SensorPage(props) {
                     <div style={{color: isMQTTConnected ? 'green' : 'red'}}>{isMQTTConnected ? 'Connected' : 'No MQTT connection'}</div>
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    {downlinkTab ?
-                        <DownlinkTab sensorData={sensorData} url={props.match}/>
-                        :
-                        messages !== null && messages!==undefined ?
-                            <UplinkTab messages={messages}/>
-                            :
-                            null
-                    }
-                </Col>
-            </Row>
         </Fragment>
     )
 

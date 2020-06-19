@@ -1,6 +1,29 @@
-export default function encode_data(data) {
+function encode_data(port, data) {
     var ret = [];
 
+if (port === 10) {
+    check_encode("output_1",
+        function(value) {
+            var converted = [0x01, 0x01,
+                value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x01, 0x01 ])
+        }
+    );
+    check_encode("output_2",
+        function(value) {
+            var converted = [0x02, 0x01,
+                value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x02, 0x01 ])
+        }
+    );
+}
+if (port === 100) {
     check_encode("device_eui",
         function(value) {
         },
@@ -43,10 +66,11 @@ export default function encode_data(data) {
             ret = ret.concat(ret, [ 0x05 ])
         }
     );
-    check_encode("loramac_otaa",
+    check_encode("loramac_join_mode",
         function(value) {
             var converted = [0x10 | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
+                ((value.loramac_otaa & 0x1) << 7),
+                0x00 ];
             ret = ret.concat(converted);
         },
         function() {
@@ -56,11 +80,10 @@ export default function encode_data(data) {
     check_encode("loramac_opts",
         function(value) {
             var converted = [0x11 | 0x80,
-                ((value.loramac_confirm_mode & 0x1) << 0) |
-                ((value.loramac_networks & 0x1) << 1) |
-                ((value.loramac_duty_cycle & 0x1) << 2) |
-                ((value.loramac_adr & 0x1) << 3),
-                0x00 ];
+                ((value.loramac_class & 0xf) << 4),
+                ((value.loramac_confirmed_uplink & 0x1) << 0) | 
+                ((value.loramac_duty_cycle & 0x1) << 2) | 
+                ((value.loramac_adr & 0x1) << 3) ];
             ret = ret.concat(converted);
         },
         function() {
@@ -119,7 +142,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x20 ])
         }
     );
-    check_encode("tick_battery",
+    check_encode("tick_digital_input",
         function(value) {
             var converted = [0x21 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -139,7 +162,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x22 ])
         }
     );
-    check_encode("tick_relative_humidity",
+    check_encode("tick_humidity",
         function(value) {
             var converted = [0x23 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -149,7 +172,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x23 ])
         }
     );
-    check_encode("tick_digital_input",
+    check_encode("tick_input1",
         function(value) {
             var converted = [0x24 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -159,7 +182,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x24 ])
         }
     );
-    check_encode("tick_light",
+    check_encode("tick_input2",
         function(value) {
             var converted = [0x25 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -169,7 +192,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x25 ])
         }
     );
-    check_encode("tick_acceleration",
+    check_encode("tick_input3",
         function(value) {
             var converted = [0x26 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -189,7 +212,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x27 ])
         }
     );
-    check_encode("tick_pir",
+    check_encode("tick_output1",
         function(value) {
             var converted = [0x28 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -199,18 +222,28 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x28 ])
         }
     );
-    check_encode("reed_switch_mode",
+    check_encode("tick_output2",
+        function(value) {
+            var converted = [0x29 | 0x80,
+                (value >> 8) & 0xff, value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x29 ])
+        }
+    );
+    check_encode("input1_mode",
         function(value) {
             var converted = [0x2A | 0x80,
-                ((value.reed_switch_rising_edge & 0x1) << 0) |
-                ((value.reed_switch_falling_edge & 0x1) << 1) ];
+                ((value.input1_rising_edge & 0x1) << 0) | 
+                ((value.input1_falling_edge & 0x1) << 1) ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x2A ])
         }
     );
-    check_encode("reed_switch_count_threshold",
+    check_encode("input1_count_threshold",
         function(value) {
             var converted = [0x2B | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -220,112 +253,68 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x2B ])
         }
     );
-    check_encode("reed_switch_value_to_tx",
+    check_encode("input1_value_tx",
         function(value) {
             var converted = [0x2C | 0x80,
-                ((value.reed_switch_report_state & 0x1) << 0) |
-                ((value.reed_switch_report_count & 0x1) << 1) ];
+                ((value.input1_report_state & 0x1) << 0) | 
+                ((value.input1_report_counter_value & 0x1) << 1) ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x2C ])
         }
     );
-    check_encode("external_connector_mode",
-        function(value) {
-            var converted = [0x2D | 0x80,
-                ((value.external_connector_rising_edge & 0x1) << 0) |
-                ((value.external_connector_falling_edge & 0x1) << 1) |
-                ((value.external_connector_functionality & 0x1) << 7) ];
-            ret = ret.concat(converted);
-        },
-        function() {
-            ret = ret.concat([ 0x2D ])
-        }
-    );
-    check_encode("external_connector_count_threshold",
-        function(value) {
-            var converted = [0x2E | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
-            ret = ret.concat(converted);
-        },
-        function() {
-            ret = ret.concat([ 0x2E ])
-        }
-    );
-    check_encode("external_connector_values_to_tx",
-        function(value) {
-            var converted = [0x2F | 0x80,
-                ((value.external_connector_report_state & 0x1) << 0) |
-                ((value.external_connector_report_count & 0x1) << 1) ];
-            ret = ret.concat(converted);
-        },
-        function() {
-            ret = ret.concat([ 0x2F ])
-        }
-    );
-    check_encode("accelerometer_break_in_threshold",
+    check_encode("input23_sample_period_idle",
         function(value) {
             var converted = [0x30 | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
+                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x30 ])
         }
     );
-    check_encode("accelerometer_impact_threshold",
+    check_encode("input23_sample_period_active",
         function(value) {
             var converted = [0x31 | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
+                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x31 ])
         }
     );
-    check_encode("accelerometer_values_to_transmit",
+    check_encode("input2_threshold",
         function(value) {
             var converted = [0x32 | 0x80,
-                ((value.accelerometer_report_alarm & 0x1) << 0) |
-                ((value.accelerometer_report_magnitude & 0x1) << 1) |
-                ((value.accelerometer_report_full_precision & 0x1) << 2) ];
+                value.input2_current_high_threshold & 0xff,
+                value.input2_current_low_threshold & 0xff ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x32 ])
         }
     );
-    check_encode("accelerometer_impact_grace_period",
+    check_encode("input3_threshold",
         function(value) {
             var converted = [0x33 | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
+                value.input3_current_high_threshold & 0xff,
+                value.input3_current_low_threshold & 0xff ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x33 ])
         }
     );
-    check_encode("accelerometer_mode",
+    check_encode("input23_threshold_enable",
         function(value) {
             var converted = [0x34 | 0x80,
-                ((value.accelerometer_break_in_threshold_enable & 0x1) << 0) |
-                ((value.accelerometer_impact_threshold_enable & 0x1) << 1) |
-                ((value.accelerometer_enable & 0x1) << 7) ];
+                ((value.input2_threshold_enable & 0x1) << 0) | 
+                ((value.input3_threshold_enable & 0x1) << 4) ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x34 ])
-        }
-    );
-    check_encode("accelerometer_sample_rate",
-        function(value) {
-            var converted = [0x35 | 0x80,
-                value & 0xff];
-            ret = ret.concat(converted);
-        },
-        function() {
-            ret = ret.concat([ 0x35 ])
         }
     );
     check_encode("temperature_relative_humidity_sample_period_idle",
@@ -348,11 +337,11 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x3A ])
         }
     );
-    check_encode("temp_thresholds",
+    check_encode("temp_threshold",
         function(value) {
             var converted = [0x3B | 0x80,
-                value.temperature_low_threshold & 0xff,
-                value.temperature_high_threshold & 0xff ];
+                value.temperature_high_threshold & 0xff,
+                value.temperature_low_threshold & 0xff ];
             ret = ret.concat(converted);
         },
         function() {
@@ -369,11 +358,11 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x3C ])
         }
     );
-    check_encode("rh_thresholds",
+    check_encode("rh_threshold",
         function(value) {
             var converted = [0x3D | 0x80,
-                value.relative_humidity_low_threshold & 0xff,
-                value.relative_humidity_high_threshold & 0xff ];
+                value.relative_humidity_high_threshold & 0xff,
+                value.relative_humidity_low_threshold & 0xff ];
             ret = ret.concat(converted);
         },
         function() {
@@ -414,14 +403,14 @@ export default function encode_data(data) {
         function(value) {
             var converted = [0x42 | 0x80,
                 value.mcu_temperature_high_threshold & 0xff,
-                value.mcu_temparature_low_threshold & 0xff ];
+                value.mcu_temperature_low_threshold & 0xff ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x42 ])
         }
     );
-    check_encode("mcu_temp_threshold_enable",
+    check_encode("mcu_temperature_threshold_enable",
         function(value) {
             var converted = [0x43 | 0x80,
                 value & 0xff];
@@ -431,37 +420,17 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x43 ])
         }
     );
-    check_encode("light_sample_period",
-        function(value) {
-            var converted = [0x47 | 0x80,
-                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
-            ret = ret.concat(converted);
-        },
-        function() {
-            ret = ret.concat([ 0x47 ])
-        }
-    );
-    check_encode("light_threshold",
-        function(value) {
-            var converted = [0x48 | 0x80,
-                value & 0xff];
-            ret = ret.concat(converted);
-        },
-        function() {
-            ret = ret.concat([ 0x48 ])
-        }
-    );
-    check_encode("pir_grace_period",
+    check_encode("output1_control",
         function(value) {
             var converted = [0x50 | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
+                value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x50 ])
         }
     );
-    check_encode("pir_threshold",
+    check_encode("output1_delay",
         function(value) {
             var converted = [0x51 | 0x80,
                 (value >> 8) & 0xff, value & 0xff];
@@ -471,79 +440,168 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x51 ])
         }
     );
-    check_encode("pir_threshold_period",
+    check_encode("output2_control",
         function(value) {
             var converted = [0x52 | 0x80,
-                (value >> 8) & 0xff, value & 0xff];
+                value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x52 ])
         }
     );
-    check_encode("pir_mode",
+    check_encode("output2_delay",
         function(value) {
             var converted = [0x53 | 0x80,
-                ((value.pir_motion_state & 0x1) << 0) |
-                ((value.pir_motion_count & 0x1) << 1) |
-                ((value.pir_event_enable & 0x1) << 6) |
-                ((value.pir_sensor_enable & 0x1) << 7) ];
+                (value >> 8) & 0xff, value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x53 ])
         }
     );
-    check_encode("moisture_sample_period",
+    check_encode("serial_interface_type",
         function(value) {
-            var converted = [0x5A | 0x80,
+            var converted = [0x60 | 0x80,
                 value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
-            ret = ret.concat([ 0x5A ])
+            ret = ret.concat([ 0x60 ])
         }
     );
-    check_encode("moisture_threshold",
+    check_encode("serial_baud_rate",
         function(value) {
-            var converted = [0x5B | 0x80,
-                value & 0xff];
+            var converted = [0x61 | 0x80,
+                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
-            ret = ret.concat([ 0x5B ])
+            ret = ret.concat([ 0x61 ])
         }
     );
-    check_encode("moisture_enable",
+    check_encode("serial_data_bits",
         function(value) {
-            var converted = [0x5C | 0x80,
+            var converted = [0x62 | 0x80,
                 value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
-            ret = ret.concat([ 0x5C ])
+            ret = ret.concat([ 0x62 ])
         }
     );
-    check_encode("moisture_dry",
+    check_encode("serial_parity_bits",
         function(value) {
-            var converted = [0x5D | 0x80,
+            var converted = [0x63 | 0x80,
                 value & 0xff];
             ret = ret.concat(converted);
         },
         function() {
-            ret = ret.concat([ 0x5D ])
+            ret = ret.concat([ 0x63 ])
+        }
+    );
+    check_encode("serial_stop_bits",
+        function(value) {
+            var converted = [0x64 | 0x80,
+                value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x64 ])
+        }
+    );
+    check_encode("serial_duplex_mode",
+        function(value) {
+            var converted = [0x65 | 0x80,
+                value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x65 ])
+        }
+    );
+    check_encode("modbus_rtu_symbol_timeout",
+        function(value) {
+            var converted = [0x68 | 0x80,
+                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x68 ])
+        }
+    );
+    check_encode("modbus_rtu_rx_timeout",
+        function(value) {
+            var converted = [0x69 | 0x80,
+                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x69 ])
+        }
+    );
+    check_encode("modbus_rtu_polling_period",
+        function(value) {
+            var converted = [0x6A | 0x80,
+                (value >> 24) & 0xff,(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
+            ret = ret.concat(converted);
+        },
+        function() {
+            ret = ret.concat([ 0x6A ])
         }
     );
     check_encode("write_to_flash",
         function(value) {
             var converted = [0x70 | 0x80,
-                ((value.app_configuration & 0x1) << 5) |
+                ((value.app_configuration & 0x1) << 5) | 
                 ((value.lora_configuration & 0x1) << 6),
                 ((value.restart_sensor & 0x1) << 0) ];
             ret = ret.concat(converted);
         },
         function() {
             ret = ret.concat([ 0x70 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
+        }
+    );
+    check_encode("firmware_version",
+        function(value) {
+        },
+        function() {
+            ret = ret.concat(ret, [ 0x71 ])
         }
     );
     check_encode("firmware_version",
@@ -563,7 +621,7 @@ export default function encode_data(data) {
             ret = ret.concat([ 0x72 ])
         }
     );
-
+}
 
     function check_encode(prop_name, do_write, do_read)
     {
@@ -579,62 +637,7 @@ export default function encode_data(data) {
             }
         }
     }
-
-    return ArrayToBase64(ret);
+    return ret;
 }
-
-function ArrayToBase64(arrayBuffer) {
-    let base64 = '';
-    const encodings = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-
-    const bytes = new Uint8Array(arrayBuffer);
-    const byteLength = bytes.byteLength;
-    const byteRemainder = byteLength % 3;
-    const mainLength = byteLength - byteRemainder;
-
-    let a, b, c, d;
-    let chunk;
-
-    // Main loop deals with bytes in chunks of 3
-    for (let i = 0; i < mainLength; i = i + 3) {
-        // Combine the three bytes into a single integer
-        chunk = (bytes[i] << 16) | (bytes[i + 1] << 8) | bytes[i + 2];
-
-        // Use bitmasks to extract 6-bit segments from the triplet
-        a = (chunk & 16515072) >> 18; // 16515072 = (2^6 - 1) << 18
-        b = (chunk & 258048)   >> 12; // 258048   = (2^6 - 1) << 12
-        c = (chunk & 4032)     >>  6; // 4032     = (2^6 - 1) << 6
-        d = chunk & 63;               // 63       = 2^6 - 1
-
-        // Convert the raw binary segments to the appropriate ASCII encoding
-        base64 += encodings[a] + encodings[b] + encodings[c] + encodings[d];
-    }
-
-    // Deal with the remaining bytes and padding
-    if (byteRemainder === 1) {
-        chunk = bytes[mainLength];
-
-        a = (chunk & 252) >> 2; // 252 = (2^6 - 1) << 2
-
-        // Set the 4 least significant bits to zero
-        b = (chunk & 3)   << 4; // 3   = 2^2 - 1
-
-        base64 += encodings[a] + encodings[b] + '==';
-    } else if (byteRemainder === 2) {
-        chunk = (bytes[mainLength] << 8) | bytes[mainLength + 1];
-
-        a = (chunk & 64512) >> 10; // 64512 = (2^6 - 1) << 10
-        b = (chunk & 1008)  >>  4; // 1008  = (2^6 - 1) << 4
-
-        // Set the 2 least significant bits to zero
-        c = (chunk & 15)    <<  2; // 15    = 2^4 - 1
-
-        base64 += encodings[a] + encodings[b] + encodings[c] + '=';
-    }
-
-    return base64;
-}
-
-
 
 

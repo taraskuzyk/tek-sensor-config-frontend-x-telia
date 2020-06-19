@@ -1,6 +1,6 @@
 import React, {Fragment} from 'react'
 
-import { FormSelect, FormInput } from "shards-react";
+import {FormInput, FormSelect} from "shards-react";
 
 
 const Input = ({element, activeLine, onChange}) => {
