@@ -6,7 +6,7 @@ import {FormCheckbox,} from 'shards-react'
 
 import ButtonGroup from '../../elements/ButtonGroup/RWButtonGroup'
 import Input from '../../elements/DV_Input/DVInput'
-import encode_data from '../../features/homeSensorv3/downlink_home_sensor'
+import encode_data from '../../features/homeSensor/downlink_home_sensor'
 
 const TableLine = ({groupData, params}) => {
   let downlinkRead = {};

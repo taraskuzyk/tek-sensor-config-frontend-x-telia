@@ -4,7 +4,6 @@ import ItemList from "../ItemList/ItemList";
 import _ from 'lodash'
 
 export default function UplinkTab({messages}){
-    console.log("beginning of UplinkTab, messages:")
 
     /*const [devices, setDevices] = useState({})*/
 
@@ -15,10 +14,13 @@ export default function UplinkTab({messages}){
     const [displayPayload, setDisplayPayload] = useState("")
 
 
-    const handleDeviceClick = (message) => {
-        setActiveDevice(message.raw.payloadMetaData.deviceMetaData.deviceEUI)
+    const handleDeviceClick = (deveui) => {
+        setActiveDevice(deveui)
     }
     const handleTimestampClick = (message) => {
+        console.log("Inside handleTimestampClick")
+        console.log(messages)
+        console.log(message)
         setActiveTimestamp(message.raw.serverTimestamp)
         setDisplayNetwork(
             JSON.stringify(
@@ -51,9 +53,6 @@ export default function UplinkTab({messages}){
         }
     }, [messages])
 
-    useEffect(()=>{
-        console.log(displayNetwork)
-    })
     return (
         <Fragment>
             <Container fluid>

@@ -14,8 +14,10 @@ export default function ItemList({items, onClick, getItemLabel}){
                         return (
                             <ListGroupItem
                                 action={true}
-                                active={activeItem === item || activeItem === null && i === 0}
+                                active={ activeItem === item || (activeItem === null && i === 0) }
                                 onClick={() =>{
+                                    console.log("inside ItemList.js")
+                                    console.log(items)
                                     setActiveItem(item)
                                     onClick(item)
                                 }}

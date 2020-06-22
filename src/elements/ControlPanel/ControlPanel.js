@@ -9,14 +9,14 @@ import {
 import DownlinkTab from '../../elements/DownlinkTab/DownlinkTab.js'
 import UplinkTab from "../../elements/UplinkTab/UplinkTab";
 
-import { homeSensorv3 } from '../../features/homeSensorv3/homeSensorv3.js'
+import { homeSensor } from '../../features/homeSensor/homeSensor.js'
 import { bookingTablet } from '../../features/bookingTablet/bookingTablet.js'
 import { agriculturalSensor } from '../../features/agriculturalSensor/agriculturalSensor.js'
 import { industrialSensor } from '../../features/industrialSensor/industrialSensor.js'
 import { industrialTracker } from '../../features/industrialTracker/industrialTracker.js'
 
 const sensors = {};
-sensors['homeSensorv3'] = homeSensorv3;
+sensors['homeSensorv3'] = homeSensor;
 sensors['bookingTablet'] = bookingTablet;
 sensors['agriculturalSensor'] = agriculturalSensor;
 sensors['industrialSensor'] = industrialSensor;

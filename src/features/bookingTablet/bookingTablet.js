@@ -16,9 +16,10 @@ integration. The device contains 2x D Cell batteries for optimal battery life of
 with an accelerometer to accommodate event-based start-up, minimizing unnecessary battery usage.`
 
 export const bookingTablet = {
-      name:'Meeting Room Booking Tablet',
-      image:'bookingPlatform.png',
-      dropdown: categories,
-      description: desc,
-      data
+    id: 'bookingTablet',
+    name:'Meeting Room Booking Tablet',
+    image:'bookingPlatform.png',
+    dropdown: categories,
+    description: desc,
+    data
 }

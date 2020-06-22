@@ -19,6 +19,7 @@ crop yields and decreased operating expenses with the deployment of this
 versatile device.`
 
 export const agriculturalSensor ={
+    id: "agriculturalSensor",
     name:'Agricultural Sensor',
     image:'agroSensor.png',
     dropdown: categories,
