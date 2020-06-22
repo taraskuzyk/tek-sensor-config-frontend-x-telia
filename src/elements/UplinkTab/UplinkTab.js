@@ -29,7 +29,13 @@ export default function UplinkTab({messages}){
                 2
             )
         )
-
+        setDisplayPayload(
+            JSON.stringify(
+                message.decoded,
+                null,
+                2
+            )
+        )
     }
 
     useEffect(()=>{
