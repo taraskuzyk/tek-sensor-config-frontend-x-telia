@@ -4,7 +4,7 @@ import {Route, Switch, withRouter} from 'react-router-dom'
 import notFound from '../../components/404/404'
 import notFoundLayout from '../../layouts/NotFoundLayout/notFoundLayout'
 
-import SensorPage from '../../components/sensorPage/sensorPage'
+import MainPage from '../../components/MainPage/MainPage'
 import SensorLayout from '../../layouts/SensorLayout/sensorLayout'
 
 const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
@@ -22,7 +22,7 @@ const AppRoute = ({ component: Component, layout: Layout, ...rest }) => (
 export const Routes = () => {
   return (
     <Switch>
-      <AppRoute exact path='/' layout={SensorLayout} component={SensorPage} />
+      <AppRoute exact path='/' layout={SensorLayout} component={MainPage} />
       <AppRoute layout={notFoundLayout} component={notFound} />
     </Switch>
   )

@@ -15,6 +15,8 @@ import { agriculturalSensor } from '../../features/agriculturalSensor/agricultur
 import { industrialSensor } from '../../features/industrialSensor/industrialSensor.js'
 import { industrialTracker } from '../../features/industrialTracker/industrialTracker.js'
 
+import { getTokens, getCustomerApplications } from "../../utils/networkServerREST";
+
 const sensors = {};
 sensors['homeSensorv3'] = homeSensor;
 sensors['bookingTablet'] = bookingTablet;
@@ -22,18 +24,22 @@ sensors['agriculturalSensor'] = agriculturalSensor;
 sensors['industrialSensor'] = industrialSensor;
 sensors['industrialTracker'] = industrialTracker;
 
-export default function SensorPage(props) {
-
+export default function MainPage(props) {
     const [username, setUsername] = useState("taras")
     const [password, setPassword] = useState("test")
-    const [server, setServer] = useState("https://lorawan-ns-na.tektelic.com/")
+    const [server, setServer] = useState("https://lorawan-ns-dev.tektelic.com")
     const [socket, setSocket] = useState(null)
     const [isSocketSet, setIsSocketSet] = useState(false)
+    //TODO: switch the project from relying on back end to relying on NS WebSockets
     const [isMQTTConnected, setIsMQTTConnected] = useState(false)
     const [sensorData, setSensorData] = useState(sensors['homeSensorv3'])
     const [sensorSelect, setSensorSelect] = useState(false)
     const [downlinkTab, setDownlinkTab] = useState(false)
+
     const [messages, setMessages] = useState([])
+    const [JWT, setJWT] = useState()
+    //JWT is an object with properties token and refreshToken (I really should be using TypeScript)
+    const [applications, setApplications] = useState([]);
 
     function updateSensorData(newSensorData){
         setSensorData(newSensorData)
@@ -41,7 +47,6 @@ export default function SensorPage(props) {
 
     function mqttConnect(){
         if (isSocketSet) {
-            console.log("ASD!!!")
             socket.emit("mqttConnect", {
                 username: username,
                 password: password,
@@ -51,9 +56,45 @@ export default function SensorPage(props) {
         }
     }
 
-    useEffect(()=> {
-        console.log(messages);
-    }, [messages])
+    const sendDownlink = (deveui, port, base64payload) => {
+        if (isSocketSet) {
+            console.log("emitting!!!")
+
+            socket.emit("downlink", "{\"msgId\":\"1\", \"devEUI\":\"" + deveui +
+                "\", \"port\":" + port + ", \"confirmed\": false, \"data\": \"" + base64payload + "\"}")
+        }
+    }
+
+/*    useEffect(()=>{
+        if (JWT){
+            console.log(JWT)
+            fetch()
+        }
+
+        async function fetch(){
+            setApplications(await getCustomerApplications(server, JWT.token))
+        }
+    }, [JWT])
+
+    useEffect(()=>{
+        if (applications !== undefined && applications.length > 0)
+            console.log(applications)
+    }, [applications])*/
+
+/*    async function login(){
+        getTokens(server, username, password)
+        .then(resp => {
+            setJWT(resp)
+            console.log(resp)
+            getCustomerApplications(server, resp.token)
+        })
+        /!*setJWT(await getTokens(server, username, password))
+        setApplications(await getCustomerApplications(server, JWT.token))*!/
+    }
+
+    async function getApplications(){
+
+    }*/
 
     useEffect(()=> {
         setSocket(io("http://localhost:13337"))
@@ -119,7 +160,7 @@ export default function SensorPage(props) {
             <Row>
                 <Col>
                     {downlinkTab ?
-                        <DownlinkTab sensorData={sensorData} url={props.match}/>
+                        <DownlinkTab sensorData={sensorData} sendDownlink={sendDownlink}/>
                         :
                         messages !== null && messages!==undefined ?
                             <UplinkTab messages={messages}/>
