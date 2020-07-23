@@ -16,10 +16,11 @@ export default function ItemList({items, onClick, getItemLabel}){
                                 action={true}
                                 active={ activeItem === item || (activeItem === null && i === 0) }
                                 onClick={() =>{
-                                    console.log("inside ItemList.js")
-                                    console.log(items)
                                     setActiveItem(item)
-                                    onClick(item)
+                                    console.log(item)
+                                    if (onClick){
+                                        onClick(item)
+                                    }
                                 }}
                                 /*key={item}*/
                             >

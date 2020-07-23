@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import App from './App';
@@ -10,7 +10,7 @@ import io from "socket.io-client"
 
 import {BrowserRouter} from 'react-router-dom'
 
-const socket = io.connect("http://localhost:4000")
+const socket = io("http://localhost:13337")
 
 ReactDOM.render(
     <SocketContext.Provider value={socket}>
