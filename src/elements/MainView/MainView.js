@@ -31,17 +31,17 @@ function MainViewInner({socket, sensorData}){
 
     const [displayIndex, setDisplayIndex] = useState(0)
 
-    const handleApplicationChange = useCallback((application) => {
+    const handleApplicationChange = (application) => {
         setActiveApplication(application)
         console.log(application.id.id)
         socket.emit("openApplication", application.id.id)
-    })
+    }
 
-    const handleDeviceChange = useCallback((device) => {
+    const handleDeviceChange = (device) => {
         setActiveDevice(device)
         console.log(device)
         socket.emit("openDevice", device)
-    })
+    }
 
     useEffect(()=>{
         socket
@@ -63,7 +63,7 @@ function MainViewInner({socket, sensorData}){
             console.log(message)
             setMessages(oldMessages => [message, ...oldMessages])
         })
-    }, [handleApplicationChange, handleDeviceChange, socket])
+    }, [socket])
 
     return (
         <Fragment>

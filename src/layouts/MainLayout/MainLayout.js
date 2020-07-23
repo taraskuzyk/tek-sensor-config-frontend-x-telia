@@ -1,9 +1,8 @@
 import React from 'react'
 import {Col, Container, Nav, NavItem} from 'shards-react'
-import './sensorLayout.scss'
-import Navbar from '../../elements/Navbar/navbar'
+import './MainLayout.scss'
 
-export const SensorLayout = (props) => {
+export const MainLayout = (props) => {
 
   return (
     <div style={{height:"100%"}}>
@@ -28,4 +27,4 @@ export const SensorLayout = (props) => {
 
 }
 
-export default SensorLayout
+export default MainLayout

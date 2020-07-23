@@ -10,7 +10,7 @@ import io from "socket.io-client"
 
 import {BrowserRouter} from 'react-router-dom'
 
-const socket = io("http://localhost:13337")
+const socket = io("https://tek-sensor-backend.ngrok.io")
 
 ReactDOM.render(
     <SocketContext.Provider value={socket}>

@@ -2,11 +2,7 @@ import React from 'react'
 //import styled from 'styled-components'
 
 import {Col, Container, Nav, NavItem, Row,} from 'shards-react'
-
-
 import './notFoundLayout.scss'
-
-import Navbar from '../../elements/Navbar/navbar'
 
 
 /*const Wrapper = styled.div`
