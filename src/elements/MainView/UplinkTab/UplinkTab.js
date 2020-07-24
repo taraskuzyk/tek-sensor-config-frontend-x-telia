@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react'
+import React, {Fragment, useState, useEffect} from 'react'
 import {Col, Row} from "shards-react";
 import SocketContext from "../../../SocketContext";
 import {timestampToString} from "../../../utils/timeConversions";
@@ -46,6 +46,17 @@ function UplinkViewInner({socket, messages, displayIndex, display}){
             )
         )
     }
+
+    useEffect(()=>{
+        if (messages && messages.length !== 0)
+            handleMessageChange(messages[0])
+        else
+            handleMessageChange({
+                ns: "No messages to show from this sensor.",
+                app: "No messages to show from this sensor.",
+                lora: "No messages to show from this sensor."
+            })
+    }, [messages])
 
     return (
         <Fragment>
