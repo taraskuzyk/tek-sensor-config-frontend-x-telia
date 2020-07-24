@@ -18,9 +18,9 @@ export default function MainPage(props){
 }
 
 function MainPageInner({socket}) {
-    const [username, setUsername] = useState("cmudryk@tektelic.com")
-    const [password, setPassword] = useState("tektelic")
-    const [nsUrl, setNsUrl] = useState("lorawan-ns-eu.tektelic.com")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
+    const [nsUrl, setNsUrl] = useState("")
     const [sensors, setSensors] = useState([])
     const [activeSensor, setActiveSensor] = useState({name: "Loading sensors..."})
     const [sensorSelect, setSensorSelect] = useState(false)
