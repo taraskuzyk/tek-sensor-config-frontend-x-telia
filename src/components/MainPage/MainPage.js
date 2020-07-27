@@ -24,6 +24,7 @@ function MainPageInner({socket}) {
     const [sensors, setSensors] = useState([])
     const [activeSensor, setActiveSensor] = useState({name: "Loading sensors..."})
     const [sensorSelect, setSensorSelect] = useState(false)
+    const [invalidCredentials, setInvalidCredentials] = useState(false)
 
     const handleSensorChange = (sensor) => {
         console.log(sensor)
@@ -39,9 +40,13 @@ function MainPageInner({socket}) {
         if (socket !== null) {
             socket.emit("getAvailableSensors")
             socket.on("availableSensors", (availableSensors) => {
+                setInvalidCredentials(false)
                 console.log(availableSensors)
                 setSensors(availableSensors)
                 handleSensorChange(availableSensors[0])
+            })
+            socket.on("invalidCredentials", ()=>{
+                setInvalidCredentials(true)
             })
         }
     }, [socket])
@@ -70,7 +75,7 @@ function MainPageInner({socket}) {
                         onChange={(event)=> {setUsername(event.target.value)}}
                     />
                 </Col>
-                <Col sm={12} lg={3} xs={12}>
+                <Col sm={12} lg={2} xs={12}>
                     <FormInput
                         placeholder="Password"
                         value={password}
@@ -84,9 +89,17 @@ function MainPageInner({socket}) {
                         onChange={(event)=> {setNsUrl(event.target.value)}}
                     />
                 </Col>
-                <Col sm={12} lg={2} xs={12}>
+                <Col sm={12} lg={1} xs={12}>
                     {/*<Button onClick={()=>mqttConnect()}>Connect</Button>*/}
                     <Button onClick={login}>Connect</Button>
+                </Col>
+                <Col sm={12} lg={2} xs={12} style={{color: 'red'}}>
+                    {
+                        invalidCredentials ?
+                            "Invalid Credentials"
+                            :
+                            null
+                    }
                 </Col>
             </Row>
             <Row>
