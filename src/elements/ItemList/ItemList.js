@@ -7,7 +7,8 @@ export default function ItemList({items, onClick, getItemLabel}){
 
     useEffect(()=> {
         setActiveItem((oldItems)=> {
-            if (oldItems[0] !== items[1])
+            if (oldItems && items && oldItems[0] && items[0] && items[1] && //simply checking for existence of stuff
+                oldItems[0] !== items[1])
                 // prevents from annoying refresh when only one item is added to the list
                 // e.g. if we have
                 //                  [item7, item8, item9]
