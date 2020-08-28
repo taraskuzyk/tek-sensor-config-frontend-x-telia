@@ -66,7 +66,7 @@ function UplinkViewInner({socket, messages, displayIndex, display}){
                         <ItemList
                             items = {messages}
                             onClick = {handleMessageChange}
-                            getItemLabel={(item)=> {
+                            getItemDisplay={(item)=> {
                                 return timestampToString(item.ns.ts)
                             }}
                         />
