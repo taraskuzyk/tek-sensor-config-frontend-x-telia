@@ -20,7 +20,8 @@ function MainViewInner({socket, sensorData}){
     if (socket) {
 
     }
-    const [applications, setApplications] = useState([])
+    const [applications, setApplications] = useState([]) //TODO: applications and devices should be classes
+    // maybe some sort of a "smart" array class that holds one extra variable, which is the "active" element
     const [activeApplication, setActiveApplication] = useState()
 
     const [devices, setDevices] = useState({})
@@ -30,6 +31,8 @@ function MainViewInner({socket, sensorData}){
     const [isDownlinkSelected, setIsDownlinkSelected] = useState(false)
 
     const [displayIndex, setDisplayIndex] = useState(0)
+
+    const [manual, setManual] = useState(false) // whether you want to manually write bytes OR build a message
 
     const handleApplicationChange = (application) => {
         setActiveApplication(application)
@@ -75,7 +78,7 @@ function MainViewInner({socket, sensorData}){
                             header="Applications"
                             items={applications}
                             onClick={handleApplicationChange}
-                            getItemLabel={(item) => item.name}
+                            getItemDisplay={(item) => item.name}
                         />
 
                         <MenuCol
@@ -83,7 +86,7 @@ function MainViewInner({socket, sensorData}){
                             header={"Devices"}
                             items={devices}
                             onClick={handleDeviceChange}
-                            getItemLabel={(item) => item.name}
+                            getItemDisplay={(item) => item.name}
                         />
 
                         <Col sm={12} lg={8} xs={12}>
@@ -94,6 +97,12 @@ function MainViewInner({socket, sensorData}){
                                         onClick={()=>setIsDownlinkSelected(!isDownlinkSelected)}
                                     >
                                         {isDownlinkSelected ? 'Downlinks' : 'Uplinks'}
+                                    </Button>
+                                    <Button
+                                        style = {{display: isDownlinkSelected ? "inline-block" : "none", marginLeft: 20}}
+                                        onClick={()=>setManual(!manual)}
+                                    >
+                                       Manual
                                     </Button>
                                     <Button
                                         style = {{display: !isDownlinkSelected ? "inline-block" : "none", marginLeft: 20}}
@@ -123,17 +132,20 @@ function MainViewInner({socket, sensorData}){
                                         messages = {messages}
                                         displayIndex = {displayIndex}
                                     />
-                                    <DownlinkTab
-                                        display = {isDownlinkSelected ? "block" : "none" }
-                                        sensorData = {sensorData.downlink ? sensorData.downlink : {}}
-                                        device = {activeDevice}
-                                    />
-
-                                    {/*make this stuff more readable. Replace displayIndex with display?*/}
+                                    {
+                                        sensorData && sensorData.downlink && sensorData.raw ?
+                                            <DownlinkTab
+                                                display = {isDownlinkSelected ? "block" : "none" }
+                                                manual = {manual}
+                                                sensorData = {sensorData}
+                                                device = {activeDevice}
+                                            />
+                                            :
+                                            null
+                                    }
                                 </CardBody>
                             </Card>
                         </Col>
-
                     </Row>
                 </Container>
             </div>

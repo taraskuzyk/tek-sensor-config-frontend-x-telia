@@ -4,13 +4,14 @@ import {FormInput, FormSelect} from "shards-react";
 
 
 const Input = ({element, activeLine, onChange}) => {
-    const write = [...element["Access"]].includes('W')
+    const write = [...element["access"]].includes('W')
 
-    const options = Object.keys(element).filter((el)=>{
-        return ((/^(Opt)[0-9]{1,2}$/.test(el)) && element[el] !== '')
-    })
+    const options =
+        Object.keys(element).filter((el)=>{
+            return ((/^(opt)[0-9]{1,2}$/.test(el)) && element[el] !== '')
+        })
         .map((el,i )=>{
-            return [[element[el]], element[`Val` + el.substr(3)]]
+            return [[element[el]], element[`val` + el.substr(3)]]
         })
 
     const handleChange = (e) => {
@@ -32,7 +33,7 @@ const Input = ({element, activeLine, onChange}) => {
             )
         }
         else {
-            return <FormInput size="sm" placeholder={element["Field description"]} className="mb-2" onChange = {handleChange}/>
+            return <FormInput size="sm" placeholder={element["parameter_description"]} className="mb-2" onChange = {handleChange}/>
         }
     }
 
