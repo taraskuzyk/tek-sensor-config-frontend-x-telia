@@ -35,6 +35,7 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
     const [categorySelect, setCategorySelect] = useState(false)
     const [downlinksObject, setDownlinksObject] = useState({})
     const [encodedObject, setEncodedObject] = useState("")
+    const [encodedString, setEncodedString] = useState("")
 
     const handleCategoryClick = (category) => {
         setActiveCategory(category)
@@ -44,6 +45,11 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
         var entries = Object.entries(encodedObject)
         for (const entry of entries) {
             socket.emit("downlink", {
+                deveui: device.deviceEUI,
+                port: entry[0],
+                base64: Base64Binary.encode(entry[1])
+            })
+            console.log({
                 deveui: device.deviceEUI,
                 port: entry[0],
                 base64: Base64Binary.encode(entry[1])
@@ -60,6 +66,7 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
 
     useEffect(()=>{
         if (downlinksObject && sensorData.downlink){
+            setEncodedObject(encode(downlinksObject, sensorData.downlink))
             let entries = Object.entries(encode(downlinksObject, sensorData.downlink))
             let str = ""
             for (let entry of entries){
@@ -69,7 +76,7 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
                 >>>Hex     - ${stringifyBytes(entry[1])}
                 `
             }
-            setEncodedObject(str)
+            setEncodedString(str)
         }
     }, [downlinksObject])
 
@@ -112,7 +119,7 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
 
                 <Row>
                     <pre>
-                         {encodedObject}
+                         {encodedString}
                     </pre>
 
                 </Row>
