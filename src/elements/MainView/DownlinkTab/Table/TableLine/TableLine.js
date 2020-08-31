@@ -28,42 +28,13 @@ export default function TableLine(props){
     )
 }
 
-function TableLineInner({groupData, downlinkData, display, onChange, index}){
+function TableLineInner({groupData, downlinkData, display, onChange, key}){
     const [downlinkWrite, setDownlinkWrite] = useState({})
     const [downlinkRead, setDownlinkRead] = useState({})
 
     const [activeLine, setActiveLine] = useState(false)
     const [RW, setRW] = useState("R")
     const [payload, setPayload] = useState("")
-
-    //setting initial conditions for downlinkRead and downlinkWrite
-    useEffect(()=>{
-        setDownlinkRead((downlinkRead) => {
-            downlinkRead[groupData[0]["category_name"]] = {}
-            if (groupData[0]["group_name"] !== "") {
-                downlinkRead[groupData[0]["category_name"]][groupData[0]["group_name"]] = {"read": true};
-            }
-            else {
-                downlinkRead[groupData[0]["category_name"]][groupData[0]["parameter_name"]] = {"read": true};
-            }
-            return {...downlinkRead}
-        })
-        setDownlinkWrite((downlinkWrite)=>{
-            if (groupData[0]["access"] !== "" || groupData[0]["access"] !== "R"){
-                downlinkWrite[ groupData[0]["category_name"] ] = {}
-                if (groupData[0]["group_name"] !== "") {
-                    downlinkWrite[groupData[0]["category_name"]][groupData[0]["group_name"]] = {"write": {}}
-                    for (let i = 0; i < groupData.length; i++) {
-                        downlinkWrite[groupData[i]["category_name"]][groupData[i]["group_name"]]["write"][groupData[i]["parameter_name"]] = 0;
-
-                    }
-                } else {
-                    downlinkWrite[groupData[0]["category_name"]][groupData[0]["parameter_name"]] = {"write": 0};
-                }
-            }
-            return {...downlinkWrite}
-        })
-    }, [])
 
     const handleRW = async (element, value) => {
         setRW(value);
@@ -94,14 +65,6 @@ function TableLineInner({groupData, downlinkData, display, onChange, index}){
         setActiveLine(!activeLine)
     }
 
-    useEffect(()=>{
-        if (activeLine){
-            setPayload(JSON.stringify(encode(RW ==='R' ? downlinkRead : downlinkWrite, downlinkData), null, 2))
-            onChange(RW ==='R' ? downlinkRead : downlinkWrite)
-        }
-    }, [downlinkWrite, downlinkRead])
-
-
     const handleInput = async (element, value) => {
         setDownlinkWrite((downlinkWrite)=>{
             if (!downlinkWrite) { // if downlink is somehow not initiated, although this *shouldn't* happen
@@ -120,13 +83,50 @@ function TableLineInner({groupData, downlinkData, display, onChange, index}){
         })
     }
 
+    useEffect(()=>{
+        if (activeLine){
+            setPayload(JSON.stringify(encode(RW ==='R' ? downlinkRead : downlinkWrite, downlinkData), null, 2))
+            onChange(RW ==='R' ? downlinkRead : downlinkWrite)
+        }
+    }, [downlinkWrite, downlinkRead])
+
+    //setting initial conditions for downlinkRead and downlinkWrite
+    useEffect(()=>{
+        setActiveLine(false)
+        setDownlinkRead((downlinkRead) => {
+            downlinkRead[groupData[0]["category_name"]] = {}
+            if (groupData[0]["group_name"] !== "") {
+                downlinkRead[groupData[0]["category_name"]][groupData[0]["group_name"]] = {"read": true};
+            }
+            else {
+                downlinkRead[groupData[0]["category_name"]][groupData[0]["parameter_name"]] = {"read": true};
+            }
+            return {...downlinkRead}
+        })
+        setDownlinkWrite((downlinkWrite)=>{
+            if (groupData[0]["access"] !== "" || groupData[0]["access"] !== "R"){
+                downlinkWrite[ groupData[0]["category_name"] ] = {}
+                if (groupData[0]["group_name"] !== "") {
+                    downlinkWrite[groupData[0]["category_name"]][groupData[0]["group_name"]] = {"write": {}}
+                    for (let i = 0; i < groupData.length; i++) {
+                        downlinkWrite[groupData[i]["category_name"]][groupData[i]["group_name"]]["write"][groupData[i]["parameter_name"]] = 0;
+
+                    }
+                } else {
+                    downlinkWrite[groupData[0]["category_name"]][groupData[0]["parameter_name"]] = {"write": 0};
+                }
+            }
+            return {...downlinkWrite}
+        })
+    }, [downlinkData])
+
     return (
         <Fragment>
             {groupData.map((el, i)=> {
                 return (
                     <tr
                         data-root={el["category_description"]}
-                        // key={el["parameter_name"]}
+                        key={key}
                         style={{display: display}}
                     >
                         <th scope="row" style={{'opacity':'100%'}} >{el["parameter_description"]}</th>

@@ -52,6 +52,10 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
         }
     }, [downlinksObject])
 
+    useEffect(()=>{
+        setDownlinksObject({})
+    }, [sensorData])
+
     return (
         <Fragment>
             <Container style={{display: display}} fluid>

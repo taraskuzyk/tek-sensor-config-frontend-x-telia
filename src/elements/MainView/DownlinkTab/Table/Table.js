@@ -73,7 +73,7 @@ export default function Table ({
                             return <TableLine
                                 downlinkData = {downlinkData}
                                 groupData = {[data]}
-                                //key = {data["parameter_name"]}
+                                key = {data["category_name"]+"_"+data["parameter_name"]}
                                 display = {category === el.category ? "table-row" : "none"}
                                 onChange = {handleTableLineChange}
                             />
@@ -84,7 +84,7 @@ export default function Table ({
                 return <TableLine
                     downlinkData = {downlinkData}
                     groupData = {groupData}
-                    //key = {data["parameter_name"]}
+                    key = {data["category_name"]+"_"+data["parameter_name"]}
                     display = {category === el.category ? "table-row" : "none"}
                     onChange = {handleTableLineChange}
                 />
