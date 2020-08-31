@@ -270,7 +270,7 @@ function is_valid(commands, sensor) {
                 var msg = (category_str + " -> " + group_or_field_str);
                 return {valid: false, message: msg, error_code: 'Field/group "' + group_or_field_str + '" does not exist'};
             }
-
+            console.log(group_or_field)
             valid = check_command(group_or_field, lookup);
             if (!valid["status"]) {
                 var msg = (category_str + " -> " + group_or_field_str);

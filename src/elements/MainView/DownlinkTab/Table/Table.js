@@ -100,7 +100,7 @@ export default function Table ({
                 <th scope="col" className="border-0" style = {{width: "10%"}}></th>
                 <th scope="col" className="border-0" style = {{width: "10%"}}></th>
                 <th scope="col" className="border-0" style = {{width: "30%"}}>Value</th>
-                <th scope="col" className="border-0" style = {{width: "20%"}}>Base 64 Payload</th>
+                {/*<th scope="col" className="border-0" style = {{width: "20%"}}>Base 64 Payload</th>*/}
             </tr>
             </thead>
             <tbody>

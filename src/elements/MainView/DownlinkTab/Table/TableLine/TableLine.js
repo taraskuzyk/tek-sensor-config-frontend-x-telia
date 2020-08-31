@@ -34,15 +34,13 @@ function TableLineInner({groupData, downlinkData, display, onChange, key}){
 
     const [activeLine, setActiveLine] = useState(false)
     const [RW, setRW] = useState("R")
-    const [payload, setPayload] = useState("")
 
     const handleRW = async (element, value) => {
         setRW(value);
-        setPayload(JSON.stringify(
-            encode(value ==='R' ? downlinkRead : downlinkWrite, downlinkData),
-            null,
-            2
-        ))
+        onChange(
+            value ==='R' ? downlinkRead : downlinkWrite
+        )
+
     }
 
     const handleActiveLineChange = () => {
@@ -85,7 +83,7 @@ function TableLineInner({groupData, downlinkData, display, onChange, key}){
 
     useEffect(()=>{
         if (activeLine){
-            setPayload(JSON.stringify(encode(RW ==='R' ? downlinkRead : downlinkWrite, downlinkData), null, 2))
+            console.log(downlinkRead)
             onChange(RW ==='R' ? downlinkRead : downlinkWrite)
         }
     }, [downlinkWrite, downlinkRead])
@@ -148,11 +146,11 @@ function TableLineInner({groupData, downlinkData, display, onChange, key}){
                             {RW === "W" && <Input element = {el} activeLine = {activeLine} onChange={handleInput}/>}
                         </td>
 
-                        {i === 0 && (
-                            <td rowSpan={groupData.length} className={'tableLine ' + (activeLine && 'activeLine')}>
-                                {payload}
-                            </td>
-                        )}
+                        {/*{i === 0 && (*/}
+                        {/*    <td rowSpan={groupData.length} className={'tableLine ' + (activeLine && 'activeLine')}>*/}
+                        {/*        {payload}*/}
+                        {/*    </td>*/}
+                        {/*)}*/}
                     </tr>
                 )
             })}
