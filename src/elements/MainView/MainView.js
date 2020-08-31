@@ -58,14 +58,7 @@ function MainViewInner({socket, sensorData}){
             setDevices(devices)
             handleDeviceChange(devices ? devices[0] : null)
         })
-        .on("allDeviceMessages", (messages) => {
-            console.log(messages)
-            setMessages(oldMessages => _.reverse(messages))
-        })
-        .on("newDeviceMessage", (message) => {
-            console.log(message)
-            setMessages(oldMessages => [message, ...oldMessages])
-        })
+
     }, [socket])
 
     return (
@@ -129,7 +122,6 @@ function MainViewInner({socket, sensorData}){
                                 <CardBody>
                                     <UplinkTab
                                         display = {!isDownlinkSelected ? "flex" : "none" }
-                                        messages = {messages}
                                         displayIndex = {displayIndex}
                                     />
                                     {
