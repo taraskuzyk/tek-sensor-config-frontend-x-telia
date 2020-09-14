@@ -126,11 +126,11 @@ var BitManipulation = {
                 byte_array = [...byte_array, parseInt("0x"+(string.splice(0, 2)).join(""))]
             }
             var bit_string = ""
-            for (var byte in byte_array) {
+            for (var byte of byte_array) {
                 bit_string += byte.toString(2)
             }
             bit_arr = bit_string.split("").map(function (val){
-                return val == 0;
+                return val == 1;
             });
         }
 
