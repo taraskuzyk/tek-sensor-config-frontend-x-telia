@@ -28,7 +28,7 @@ export default function TableLine(props){
     )
 }
 
-function TableLineInner({groupData, downlinkData, display, onChange, key}){
+function TableLineInner({groupData, downlinkData, display, onChange, sensor, category}){
     const [downlinkWrite, setDownlinkWrite] = useState({})
     const [downlinkRead, setDownlinkRead] = useState({})
 
@@ -45,8 +45,8 @@ function TableLineInner({groupData, downlinkData, display, onChange, key}){
 
     const handleActiveLineChange = () => {
 
-        var category = Object.keys(downlinkWrite)[0]
-        var group_or_field = Object.keys(downlinkWrite[category])[0]
+        var category = Object.keys(RW ==='R' ? downlinkRead : downlinkWrite)[0]
+        var group_or_field = Object.keys((RW ==='R' ? downlinkRead : downlinkWrite)[category])[0]
 
         var newObject = {
             [category]: {
@@ -120,11 +120,24 @@ function TableLineInner({groupData, downlinkData, display, onChange, key}){
 
     return (
         <Fragment>
+            { (groupData.length > 1) ?
+                <tr
+                    data-root={groupData[0]["category_description"]}
+                    key={sensor+"_"+category+"_"+"header"}
+                    style={{display: display, backgroundColor: "grey"}}
+                >
+                    <th>
+                        {groupData[0]["group_description"]}
+                    </th>
+                </tr>
+               :
+               null
+            }
             {groupData.map((el, i)=> {
                 return (
                     <tr
                         data-root={el["category_description"]}
-                        key={key}
+                        key={sensor+"_"+category+"_"+el["parameter_name"]}
                         style={{display: display}}
                     >
                         <th scope="row" style={{'opacity':'100%'}} >{el["parameter_description"]}</th>
