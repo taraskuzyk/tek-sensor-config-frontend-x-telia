@@ -24,6 +24,7 @@ function MainPageInner({socket}) {
     const [sensors, setSensors] = useState([])
     const [activeSensor, setActiveSensor] = useState({name: "Loading sensors..."})
     const [sensorSelect, setSensorSelect] = useState(false)
+    const [nsSelect, setNsSelect] = useState(false)
     const [invalidCredentials, setInvalidCredentials] = useState(false)
 
     const handleSensorChange = (sensor) => {
@@ -55,8 +56,18 @@ function MainPageInner({socket}) {
         <Fragment>
             <Row style={{margin: 20}}>
                 <Col sm={12} lg={2} xs={12}>
-                    <Dropdown open={sensorSelect} toggle={()=>setSensorSelect(!sensorSelect)} >
-                        <DropdownToggle style = {{width: "100%"}}>{activeSensor.name}</DropdownToggle>
+                    <Dropdown
+                        open={sensorSelect}
+                        toggle={()=>setSensorSelect(!sensorSelect)}
+                    >
+                        <DropdownToggle
+                            style = {{width: "100%"}}
+                            caret
+                            outline
+                            theme="light"
+                        >
+                            {activeSensor.name}
+                        </DropdownToggle>
                         <DropdownMenu>
                             {sensors.map((el, i)=>{
                                 return (
@@ -80,18 +91,33 @@ function MainPageInner({socket}) {
                         placeholder="Password"
                         value={password}
                         onChange={(event)=> {setPassword(event.target.value)}}
+                        type="password"
                     />
                 </Col>
-                <Col sm={12} lg={3} xs={12}>
-                    <FormInput
-                        placeholder="NS URL e.g. lorawan-ns-na.tektelic.com"
-                        value={nsUrl}
-                        onChange={(event)=> {setNsUrl(event.target.value)}}
-                    />
-                </Col>
+                <Dropdown open={nsSelect} toggle={()=>setNsSelect(!nsSelect)} >
+                    <DropdownToggle
+                        style = {{width: "100%"}}
+                        caret
+                        outline
+                        theme="light"
+                    >
+                        {nsUrl}
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem onClick={()=>setNsUrl("lorawan-ns-na.tektelic.com")}>
+                            TEKTELIC NA
+                        </DropdownItem>
+                        <DropdownItem onClick={()=>setNsUrl("lorawan-ns-eu.tektelic.com")}>
+                            TEKTELIC EU
+                        </DropdownItem>
+                        <DropdownItem onClick={()=>setNsUrl("lorawan-ns-dev.tektelic.com")}>
+                            TEKTELIC DEV
+                        </DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
                 <Col sm={12} lg={1} xs={12}>
                     {/*<Button onClick={()=>mqttConnect()}>Connect</Button>*/}
-                    <Button onClick={login}>Connect</Button>
+                    <Button theme="success" onClick={login}>Connect</Button>
                 </Col>
                 <Col sm={12} lg={2} xs={12} style={{color: 'red'}}>
                     {

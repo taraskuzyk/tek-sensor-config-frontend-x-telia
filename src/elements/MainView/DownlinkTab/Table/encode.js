@@ -26,7 +26,7 @@ var BitManipulation = {
         }
     },
 
-    __remove_leading_zeros(bits) {
+    __remove_leading_zeros: function (bits) {
         while ((bits[0] != true) && (bits.length > 1)) {
             bits.shift()
         }
@@ -98,18 +98,18 @@ var BitManipulation = {
 
             for (i = 0; i < 8; i++) {
                 var bits = dv.getUint8(i).toString(2);
-                if (bits.length < 8) {
-                    bits = new Array(8 - bits.length).fill('0').join("") + bits;
+                while (bits.length !== 8) {
+                    bits = "0"+bits
                 }
                 result += bits;
             }
             bit_arr = result.split("").map(function (val){
-                return val == 0;
+                return val == '1';
             });
         } else if (typeof (literal) == "string" && type === "string") {
             for (var i = 0; i < literal.length; i++) {
                 var char_val = literal[i].charCodeAt(0);
-                var char_bits = this.get_bits(char_val)
+                var char_bits = this.get_bits(char_val, "unsigned")
                 this.__make_multiple_of_8(char_bits)
                 bit_arr = bit_arr.concat(char_bits);
             }
@@ -120,15 +120,16 @@ var BitManipulation = {
             } else {
                 string = ("0"+literal).split("")
             }
-            // TODO: there's probably a cleaner way of implementing this...
             var byte_array = []
             while (string.length > 0) {
-                byte_array = [...byte_array, parseInt("0x"+(string.splice(0, 2)).join(""))]
+                byte_array = byte_array.concat( parseInt("0x"+(string.splice(0, 2)).join("")) )
             }
-            var bit_string = ""
-            for (var byte of byte_array) {
-                bit_string += byte.toString(2)
+            var bit_string = "";
+            for (var i = 0; i < byte_array.length; i++){
+                var byte = byte_array[i];
+                bit_string += byte.toString(2);
             }
+
             bit_arr = bit_string.split("").map(function (val){
                 return val == 1;
             });
@@ -176,15 +177,6 @@ var BitManipulation = {
             bytes_arr.unshift(0);
         }
         return bytes_arr;
-    },
-
-    print: function (bits) {
-        var str = "0b";
-        for (var i = 0; i < bits.length; i++) {
-            str += Number(bits[i]);
-        }
-        console.log(str);
-        return str;
     },
 
     shift_left: function (bits, shift_val) {
@@ -277,21 +269,12 @@ var BitManipulation = {
     },
 }
 
-
-
-var reduce = Function.bind.call(Function.call, Array.prototype.reduce);
-var isEnumerable = Function.bind.call(Function.call, Object.prototype.propertyIsEnumerable);
-var concat = Function.bind.call(Function.call, Array.prototype.concat);
-var keys = Reflect.ownKeys;
+// polyfill for backward compatibility with ES 5 and Nashorn
 if (!Object.values) {
-    Object.values = function values(O) {
-        return reduce(
-            keys(O),
-            function (v, k) {
-                return concat(v, typeof k === 'string' && isEnumerable(O, k) ? [O[k]] : [])
-            },
-            []
-        );
+    Object.values = function (obj) {
+        return Object.keys(obj).map(function(e) {
+            return obj[e]
+        })
     };
 }
 
@@ -316,7 +299,7 @@ function check_command(group_or_field, lookup) {
         }
         if (typeof(group_or_field["write"]) === "object") {
             var fields = Object.keys(group_or_field["write"]);
-            if (fields.length != Object.keys(lookup).length - 2) {
+            if (fields.length != Object.keys(lookup).length - 3) {
                 return {status: false, error_code: 'Invalid number of fields in group'};
             }
             for (var i = 0; i < fields.length; i++) {
@@ -332,9 +315,7 @@ function check_command(group_or_field, lookup) {
 
 function is_valid(commands, sensor) {
     // returns true if commands are valid, returns false otherwise
-
     var valid = true;
-
     var categories = Object.keys(commands);
     for (var i = 0; i < categories.length; i++) {
         var category_str = categories[i];
@@ -386,31 +367,19 @@ function write_bits(write_value, start_bit, end_bit, type, current_bits) {
     return current_bits;
 }
 
-function format_header(header, read) {
+function format_header(header, read, or_80_to_write) {
     // takes in the header as a string, and handles the case of where the header is 2 bytes long
-    if (read === undefined) {
-        read = true;
+    var headersStr = header.split(" ")
+    var headersInt = [];
+    for (var i = 0; i < headersStr.length; i++) {
+        var int = parseInt(headersStr[i]);
+        if (!read && or_80_to_write == "1") {
+            int = int | 0x80
+        }
+        headersInt.push(int)
     }
+    return headersInt
 
-    if (header.length === 4) {
-        if (read) {
-            return [parseInt(header)];
-        }
-        else {
-            return [parseInt(header) | 0x80];
-        }
-    }
-    else {
-        var header1 = "";
-        var header0 = "";
-        for (var i = 0; i < 4; i++) {
-            header1 += header[i];
-        }
-        for (var i = 5; i < 9; i++) {
-            header0 += header[i];
-        }
-        return [parseInt(header1), parseInt(header0)]
-    }
 }
 
 function write_to_port(bytes, port, encoded_data) {
@@ -427,17 +396,17 @@ function write_to_port(bytes, port, encoded_data) {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
 function encode_read(lookup, encoded_data) {
-    var bytes = format_header(lookup["header"], true);
+    var bytes = format_header(lookup["header"], true, lookup["or_80_to_write"]);
     write_to_port(bytes, lookup["port"], encoded_data);
 }
 
 function encode_write_field(command, lookup, encoded_data) {
-    var bytes = format_header(lookup["header"], false);
+    var bytes = format_header(lookup["header"], false, lookup["or_80_to_write"]);
 
     var value = command["write"];
     if ( (lookup["type"] !== "string") && (lookup["type"] !== "hexstring") ) {
         value = Number(value) - Number(lookup["addition"] ? lookup["addition"] : 0)
-        value = Math.round(Number(value)/Number(lookup["coefficient"]));
+        value = Number(value)/Number(lookup["coefficient"]);
         // TODO: ideally this should be done inside of write_bits, not before it
     }
 
@@ -446,7 +415,7 @@ function encode_write_field(command, lookup, encoded_data) {
         parseInt(lookup["bit_start"]),
         parseInt(lookup["bit_end"]),
         lookup["type"],
-        0,
+        0
     );
 
     if ( (lookup["multiple"] == 0) || (lookup["multiple"] === undefined) ) {
@@ -464,7 +433,7 @@ function encode_write_field(command, lookup, encoded_data) {
 
 function encode_write_group(commands, group_lookup, encoded_data) {
     var header = group_lookup["header"];
-    var bytes = format_header(header, false);
+    var bytes = format_header(header, false, group_lookup["or_80_to_write"]);
 
     var written_bits = BitManipulation.get_bits(0);
     var field_names = Object.keys(commands["write"])
@@ -481,7 +450,7 @@ function encode_write_group(commands, group_lookup, encoded_data) {
 
         if ( (lookup["type"] !== "string") && (lookup["type"] !== "hexstring") ) {
             value = Number(value) - Number(lookup["addition"] ? lookup["addition"] : 0)
-            value = Math.round(Number(value)/Number(lookup["coefficient"]));
+            value = Number(value)/Number(lookup["coefficient"]);
             // TODO: ideally this should be done inside of write_bits, not before it
         }
 
@@ -495,7 +464,7 @@ function encode_write_group(commands, group_lookup, encoded_data) {
             );
         }
         else {
-            multiple_field_bits = BitManipulation.get_bits(value);
+            multiple_field_bits = BitManipulation.get_bits(value, lookup["type"]);
             bytes_num += multiple_field_bits.length/8;
         }
     }
@@ -520,7 +489,7 @@ export default function encode(commands, sensor) {
         return {error : message, error_code: error_code};
     }
 
-    var lookup_all = {...sensor};   // clones the sensor json
+    var lookup_all = JSON.parse(JSON.stringify(sensor));   // clones the sensor json
     var encoded_data = {};
     var categories = Object.keys(commands);
     for (var i = 0; i < categories.length; i++) {   // iterates over the categories of commands
@@ -544,11 +513,16 @@ export default function encode(commands, sensor) {
             var case_2 = command.hasOwnProperty("write") && (typeof(command["write"]) != "object");
             var case_3 = !(case_1 || case_2);
 
-            if (case_1) { encode_read(lookup, encoded_data); }
-            else if (case_2) { encode_write_field(command, lookup, encoded_data); }
-            else if (case_3) { encode_write_group(command, lookup, encoded_data); }
+            if (case_1) {
+                encode_read(lookup, encoded_data);
+            } else if (case_2) {
+                encode_write_field(command, lookup, encoded_data);
+            } else if (case_3) {
+                encode_write_group(command, lookup, encoded_data); }
+
 
         }
     }
     return encoded_data;
 }
+

@@ -21,7 +21,7 @@ const ReadWrite = ({element, activeLine, onChange}) => {
 
     <ButtonGroup vertical>
     {[...element["access"]].map((el, i) =>{
-      return <Button disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} size={"sm"} >{el === "R" ? "Read" : "Write"}</Button>
+      return <Button outline disabled={!activeLine} onClick={(e)=>clickHandler(el, e)} key={el} active = {el === state} size={"sm"} >{el === "R" ? "Read" : "Write"}</Button>
     })}
     </ButtonGroup>
   )

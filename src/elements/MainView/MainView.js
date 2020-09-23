@@ -1,5 +1,16 @@
 import React, {Fragment, useState, useEffect} from 'react'
-import {Card, CardHeader, Col, Container, Row, Button, CardBody} from "shards-react";
+import {
+    Card,
+    CardHeader,
+    Col,
+    Container,
+    Row,
+    Button,
+    CardBody,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem, Dropdown
+} from "shards-react";
 import _ from 'lodash'
 import SocketContext from "../../SocketContext";
 import MenuCol from "../MenuCol/MenuCol";
@@ -27,8 +38,8 @@ function MainViewInner({socket, sensorData}){
     const [devices, setDevices] = useState({})
     const [activeDevice, setActiveDevice] = useState()
 
-    const [messages, setMessages] = useState([])
     const [isDownlinkSelected, setIsDownlinkSelected] = useState(false)
+    const [directionSelect, setDirectionSelect] = useState(false)
 
     const [displayIndex, setDisplayIndex] = useState(0)
 
@@ -84,37 +95,63 @@ function MainViewInner({socket, sensorData}){
 
                         <Col sm={12} lg={8} xs={12}>
                             <Card>
-                                <CardHeader>
-                                    <Button
-                                        theme="info"
-                                        onClick={()=>setIsDownlinkSelected(!isDownlinkSelected)}
-                                    >
-                                        {isDownlinkSelected ? 'Downlinks' : 'Uplinks'}
-                                    </Button>
+                                <CardHeader style={{display: 'flex'}}>
+                                    <Dropdown open={directionSelect} toggle={()=>setDirectionSelect(!directionSelect)} >
+                                        <DropdownToggle
+                                            caret
+                                            outline
+                                        >
+                                            {isDownlinkSelected ? "Downlink" : "Uplink"}
+                                        </DropdownToggle>
+                                        <DropdownMenu>
+                                            <DropdownItem onClick={()=>setIsDownlinkSelected(true)}>
+                                                Downlink
+                                            </DropdownItem>
+                                            <DropdownItem onClick={()=>setIsDownlinkSelected(false)}>
+                                                Uplink
+                                            </DropdownItem>
+                                        </DropdownMenu>
+                                    </Dropdown>
                                     <Button
                                         style = {{display: isDownlinkSelected ? "inline-block" : "none", marginLeft: 20}}
-                                        onClick={()=>setManual(!manual)}
+                                        onClick={()=>setManual(true)}
+                                        active={manual}
+                                        outline
                                     >
-                                       Manual
+                                        Manual
+                                    </Button>
+                                    <Button
+                                        style = {{display: isDownlinkSelected ? "inline-block" : "none", marginLeft: 0}}
+                                        onClick={()=>setManual(false)}
+                                        active={!manual}
+                                        outline
+                                    >
+                                        Generate
                                     </Button>
                                     <Button
                                         style = {{display: !isDownlinkSelected ? "inline-block" : "none", marginLeft: 20}}
                                         onClick={()=> setDisplayIndex(0)}
                                         active={displayIndex===0}
+                                        outline
+                                        //theme={displayIndex===0 ? "primary" : "light"}
                                     >
                                         Network Server
                                     </Button>
                                     <Button
-                                        style = {{display: !isDownlinkSelected ? "inline-block" : "none", marginLeft: 20 }}
+                                        style = {{display: !isDownlinkSelected ? "inline-block" : "none", marginLeft: 0 }}
                                         onClick={()=> setDisplayIndex(1)}
                                         active={displayIndex===1}
+                                        outline
+                                        //theme={displayIndex===1 ? "primary" : "light"}
                                     >
                                         App
                                     </Button>
                                     <Button
-                                        style = {{display: !isDownlinkSelected ? "inline-block" : "none", marginLeft: 20 }}
+                                        style = {{display: !isDownlinkSelected ? "inline-block" : "none", marginLeft: 0 }}
                                         onClick={()=> setDisplayIndex(2)}
                                         active={displayIndex===2}
+                                        outline
+                                        //theme={displayIndex===2 ? "primary" : "light"}
                                     >
                                         LoRaMAC
                                     </Button>
