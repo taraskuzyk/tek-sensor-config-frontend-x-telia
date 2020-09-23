@@ -124,7 +124,7 @@ function TableLineInner({groupData, downlinkData, display, onChange, sensor, cat
                 <tr
                     data-root={groupData[0]["category_description"]}
                     key={sensor+"_"+category+"_"+"header"}
-                    style={{display: display, backgroundColor: "grey"}}
+                    style={{display: display, color: "#0067F4"}}
                 >
                     <th>
                         {groupData[0]["group_description"]}
