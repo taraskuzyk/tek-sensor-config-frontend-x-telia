@@ -60,37 +60,34 @@ export default function Table ({
         }
     }
 
-    const tableLines = () => {
+    const tableLines = unique.map((el, i) => {
+        const groupData = data.filter((dataElement) => {
+            return dataElement["group_name"] === el.group && dataElement["category_name"] === el.category
+        })
+        console.log(groupData)
 
-        return unique.map((el, i) => {
-                const groupData = data.filter((dataElement)=> {
-                    return dataElement["group_name"] === el.group && dataElement["category_name"] === el.category
+        if (el.group === "") {
+            return (
+                groupData.map((data) => {
+                    return <TableLine
+                        downlinkData={downlinkData}
+                        groupData={[data]}
+                        key={data["category_name"] + "_" + data["parameter_name"]}
+                        display={category === el.category ? "table-row" : "none"}
+                        onChange={handleTableLineChange}
+                    />
                 })
+            )
+        }
 
-                if(el.group === "") {
-                    return (
-                        groupData.map((data)=> {
-                            return <TableLine
-                                downlinkData = {downlinkData}
-                                groupData = {[data]}
-                                key = {data["category_name"]+"_"+data["parameter_name"]}
-                                display = {category === el.category ? "table-row" : "none"}
-                                onChange = {handleTableLineChange}
-                            />
-                        })
-                    )
-                }
-
-                return <TableLine
-                    downlinkData = {downlinkData}
-                    groupData = {groupData}
-                    key = {data["category_name"]+"_"+data["parameter_name"]}
-                    display = {category === el.category ? "table-row" : "none"}
-                    onChange = {handleTableLineChange}
-                />
-            }
-        )
-    }
+        return <TableLine
+            downlinkData={downlinkData}
+            groupData={groupData}
+            key={groupData[0]["category_name"] + "_" + groupData[0]["group_name"]}
+            display={category === el.category ? "table-row" : "none"}
+            onChange={handleTableLineChange}
+        />
+    })
 
     return (
         <table className="table mb-0">
@@ -104,7 +101,7 @@ export default function Table ({
             </tr>
             </thead>
             <tbody>
-            {tableLines()}
+                {tableLines}
             </tbody>
         </table>
     )
