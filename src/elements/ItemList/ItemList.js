@@ -25,7 +25,6 @@ export default function ItemList({items, onClick, getItemDisplay}){
 
     if (items) {
         return (
-            <div style={{display: "block-inline"}}>
             <ListGroup>
                 {
                     items.map((item, i) => {
@@ -41,13 +40,12 @@ export default function ItemList({items, onClick, getItemDisplay}){
                                 }}
                                 /*key={item}*/
                             >
-                                {getItemDisplay ? getItemDisplay(item) : "XD"}
+                                {getItemDisplay ? getItemDisplay(item) : JSON.stringify(item)}
                             </ListGroupItem>
                         );
                     })
                 }
             </ListGroup>
-            </div>
         )
     }
     else {

@@ -26,6 +26,7 @@ function MainPageInner({socket}) {
     const [sensorSelect, setSensorSelect] = useState(false)
     const [nsSelect, setNsSelect] = useState(false)
     const [invalidCredentials, setInvalidCredentials] = useState(false)
+    const [external, setExternal] = useState(false);
 
     const handleSensorChange = (sensor) => {
         console.log(sensor)
@@ -46,8 +47,11 @@ function MainPageInner({socket}) {
                 setSensors(availableSensors)
                 handleSensorChange(availableSensors[0])
             })
-            socket.on("invalidCredentials", ()=>{
+            socket.on("loginFail", ()=>{
                 setInvalidCredentials(true)
+            })
+            socket.on("loginSuccess", ()=>{
+                socket.emit("getUserApplications")
             })
         }
     }, [socket])
@@ -79,14 +83,14 @@ function MainPageInner({socket}) {
                         </DropdownMenu>
                     </Dropdown>
                 </Col>
-                <Col sm={12} lg={2} xs={12}>
+                <Col sm={12} lg={2} xs={12} style={{display: external ? "none" : "inline-block"}}>
                     <FormInput
                         placeholder="Username"
                         value={username}
                         onChange={(event)=> {setUsername(event.target.value)}}
                     />
                 </Col>
-                <Col sm={12} lg={2} xs={12}>
+                <Col sm={12} lg={2} xs={12} style={{display: external ? "none" : "inline-block"}}>
                     <FormInput
                         placeholder="Password"
                         value={password}
@@ -104,18 +108,33 @@ function MainPageInner({socket}) {
                         {nsUrl}
                     </DropdownToggle>
                     <DropdownMenu>
-                        <DropdownItem onClick={()=>setNsUrl("lorawan-ns-na.tektelic.com")}>
+                        <DropdownItem onClick={()=>{
+                            setNsUrl("lorawan-ns-na.tektelic.com")
+                            setExternal(false)
+                        }}>
                             TEKTELIC NA
                         </DropdownItem>
-                        <DropdownItem onClick={()=>setNsUrl("lorawan-ns-eu.tektelic.com")}>
+                        <DropdownItem onClick={()=>{
+                            setNsUrl("lorawan-ns-eu.tektelic.com")
+                            setExternal(false)
+                        }}>
                             TEKTELIC EU
                         </DropdownItem>
-                        <DropdownItem onClick={()=>setNsUrl("lorawan-ns-dev.tektelic.com")}>
+                        <DropdownItem onClick={()=>{
+                            setNsUrl("lorawan-ns-dev.tektelic.com")
+                            setExternal(false)
+                        }}>
                             TEKTELIC DEV
+                        </DropdownItem>
+                        <DropdownItem onClick={()=>{
+                            setNsUrl("External NS")
+                            setExternal(true)
+                        }}>
+                            External NS
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Col sm={12} lg={1} xs={12}>
+                <Col sm={12} lg={1} xs={12} style={{display: external ? "none" : "inline-block"}}>
                     {/*<Button onClick={()=>mqttConnect()}>Connect</Button>*/}
                     <Button theme="success" onClick={login}>Connect</Button>
                 </Col>
@@ -130,7 +149,7 @@ function MainPageInner({socket}) {
             </Row>
             <Row>
                 <Col>
-                    <MainView sensorData={activeSensor}/>
+                    <MainView sensorData={activeSensor} external={external}/>
                     {/* sensors is passed down to DownlinkTab */}
                 </Col>
             </Row>

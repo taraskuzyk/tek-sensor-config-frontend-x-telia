@@ -29,8 +29,6 @@ function stringifyBytes(bytes){
 }
 
 function DownlinkTabInner({sensorData, display, device, socket, manual}) {
-
-
     const [activeCategory, setActiveCategory] = useState()
     const [categorySelect, setCategorySelect] = useState(false)
     const [downlinksObject, setDownlinksObject] = useState({})
@@ -132,11 +130,10 @@ function DownlinkTabInner({sensorData, display, device, socket, manual}) {
 
                     <Col sm={12} lg={12} xs={12}>
                         <Table
-                            data = {sensorData.raw}
+                            rawData = {sensorData.raw}
                             downlinkData = {sensorData.downlink}
                             category = {activeCategory}
                             device = {device}
-                            downlinksObject={downlinksObject}
                             setDownlinksObject={setDownlinksObject}
                         />
                     </Col>

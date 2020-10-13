@@ -2,9 +2,9 @@ import React from 'react'
 import {Card, CardHeader, Col} from "shards-react";
 import ItemList from "../ItemList/ItemList";
 
-export default function MenuCol({lg, header, items, onClick, getItemDisplay}){
+export default function MenuCol({lg, header, items, onClick, getItemDisplay, style}){
     return(
-        <Col sm={12} lg={lg} xs={12}>
+        <Col sm={12} lg={lg} xs={12} style={style}>
             <Card>
                 <CardHeader>
                     {header}

@@ -75,6 +75,10 @@ function UplinkViewInner({socket, displayIndex, display}){
             console.log(message)
             setMessages(oldMessages => [message, ...oldMessages])
         })
+        .on("decodedMessage", (message) => {
+            console.log(message)
+            setMessages(oldMessages => [message, ...oldMessages])
+        })
     }, [socket])
 
     return (
