@@ -1,23 +1,21 @@
-import React, {Fragment, useState, useEffect} from 'react'
+import React from 'react'
 import TableLine from './TableLine/TableLine'
-import encode from './encode'
 
 export default function Table ({
     downlinkData /*sent down to TableLine*/,
-    data,
+    rawData,
     category,
-    downlinksObject,
     setDownlinksObject
     }) {
 
     let unique = []
-    for (let i = 0; i < data.length; i++){
+    console.log("data")
+    console.log(rawData)
+    for (let i = 0; i < rawData.length; i++){
         let isNew = true;
         for (const obj of unique) {
             if (
-                (obj.group === data[i]["group_name"] && obj.category === data[i]["category_name"])
-                // &&
-                // (obj.parameter === data[i]["parameter_name"] && obj.group === "" && obj.category === data[i]["category_name"])
+                (obj.group === rawData[i]["group_name"] && obj.category === rawData[i]["category_name"])
             ){
                 isNew = false
             }
@@ -25,8 +23,8 @@ export default function Table ({
         if (isNew){
             unique.push({
                 // parameter: data[i]["parameter_name"],
-                group: data[i]["group_name"],
-                category: data[i]["category_name"]
+                group: rawData[i]["group_name"],
+                category: rawData[i]["category_name"]
             })
         }
     }
@@ -61,9 +59,10 @@ export default function Table ({
     }
 
     const tableLines = unique.map((el, i) => {
-        const groupData = data.filter((dataElement) => {
+        const groupData = rawData.filter((dataElement) => {
             return dataElement["group_name"] === el.group && dataElement["category_name"] === el.category
         })
+        console.log(el.group, el.category)
         console.log(groupData)
 
         if (el.group === "") {
