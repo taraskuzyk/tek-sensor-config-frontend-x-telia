@@ -84,14 +84,14 @@ function UplinkViewInner({socket, displayIndex, display}){
     return (
         <Fragment>
             <Row style={{display: display, width: "100%"}}>
-                <Col sm={12} lg={3} xs={12}>
+                <Col sm={12} lg={5} xs={12}>
                     {messages.length > 0 ?
                         <Fragment>
                             <ItemList
                                 items = {messages.slice( 20*(page-1), 20*(page) )}
                                 onClick = {handleMessageChange}
                                 getItemDisplay={(item)=> {
-                                    return timestampToString(item.ns.ts)
+                                    return timestampToString(item.ns.ts) + "  |  " + item.ns.messageType
                                 }}
                             />
                             <Row>
@@ -123,7 +123,7 @@ function UplinkViewInner({socket, displayIndex, display}){
                     }
                 </Col>
 
-                <Col sm={12} lg={9} xs={12}>
+                <Col sm={12} lg={7} xs={12}>
                     <pre>
                         {displayIndex === 0 ?
                             displayNetwork :
