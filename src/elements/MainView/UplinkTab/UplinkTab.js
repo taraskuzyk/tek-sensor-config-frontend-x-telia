@@ -91,7 +91,8 @@ function UplinkViewInner({socket, displayIndex, display}){
                                 items = {messages.slice( 20*(page-1), 20*(page) )}
                                 onClick = {handleMessageChange}
                                 getItemDisplay={(item)=> {
-                                    return timestampToString(item.ns.ts) + "  |  " + item.ns.messageType
+                                    return timestampToString(item.ns.ts) + "  |  " + item.ns.messageType + " | " +
+                                        item.ns.fport
                                 }}
                             />
                             <Row>
