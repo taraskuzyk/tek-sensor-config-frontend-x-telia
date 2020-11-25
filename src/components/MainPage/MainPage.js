@@ -18,8 +18,8 @@ export default function MainPage(props){
 }
 
 function MainPageInner({socket}) {
-    const [username, setUsername] = useState("cmudryk@tektelic.com")
-    const [password, setPassword] = useState("tektelic")
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
     const [nsUrl, setNsUrl] = useState("lorawan-ns-na.tektelic.com")
     const [sensors, setSensors] = useState([])
     const [activeSensor, setActiveSensor] = useState({name: "Loading sensors..."})
@@ -27,6 +27,7 @@ function MainPageInner({socket}) {
     const [nsSelect, setNsSelect] = useState(false)
     const [invalidCredentials, setInvalidCredentials] = useState(false)
     const [external, setExternal] = useState(false);
+    const [other, setOther] = useState(false)
 
     const handleSensorChange = (sensor) => {
         console.log(sensor)
@@ -105,35 +106,53 @@ function MainPageInner({socket}) {
                         outline
                         theme="light"
                     >
-                        {nsUrl}
+                        {other ? "Other Instance" : nsUrl}
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem onClick={()=>{
                             setNsUrl("lorawan-ns-na.tektelic.com")
                             setExternal(false)
+                            setOther(false)
                         }}>
                             TEKTELIC NA
                         </DropdownItem>
                         <DropdownItem onClick={()=>{
                             setNsUrl("lorawan-ns-eu.tektelic.com")
                             setExternal(false)
+                            setOther(false)
                         }}>
                             TEKTELIC EU
                         </DropdownItem>
                         <DropdownItem onClick={()=>{
                             setNsUrl("lorawan-ns-dev.tektelic.com")
                             setExternal(false)
+                            setOther(false)
                         }}>
                             TEKTELIC DEV
                         </DropdownItem>
                         <DropdownItem onClick={()=>{
+                            setNsUrl("")
+                            setExternal(false)
+                            setOther(true)
+                        }}>
+                            Other TEK-NS Instance
+                        </DropdownItem>
+                        <DropdownItem onClick={()=>{
                             setNsUrl("External NS")
                             setExternal(true)
+                            setOther(false)
                         }}>
                             External NS
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
+                <Col sm={12} lg={2} xs={12} style={{display: !other ? "none" : "inline-block"}}>
+                    <FormInput
+                        placeholder="URL"
+                        value={nsUrl}
+                        onChange={(event)=> {setNsUrl(event.target.value)}}
+                    />
+                </Col>
                 <Col sm={12} lg={1} xs={12} style={{display: external ? "none" : "inline-block"}}>
                     {/*<Button onClick={()=>mqttConnect()}>Connect</Button>*/}
                     <Button theme="success" onClick={login}>Connect</Button>
