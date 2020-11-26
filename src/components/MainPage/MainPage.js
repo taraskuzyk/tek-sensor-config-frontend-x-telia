@@ -6,6 +6,7 @@ import {
 } from 'shards-react'
 
 import MainView from "../../elements/MainView/MainView";
+import minimist from 'minimist'
 
 export default function MainPage(props){
     return(
@@ -56,6 +57,12 @@ function MainPageInner({socket}) {
             })
         }
     }, [socket])
+
+    useEffect(()=>{
+
+        const argv = minimist(process.argv.slice(2))
+        console.log(argv)
+    })
 
     return (
         <Fragment>
@@ -110,21 +117,21 @@ function MainPageInner({socket}) {
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem onClick={()=>{
-                            setNsUrl("lorawan-ns-na.tektelic.com")
+                            setNsUrl("https://lorawan-ns-na.tektelic.com")
                             setExternal(false)
                             setOther(false)
                         }}>
                             TEKTELIC NA
                         </DropdownItem>
                         <DropdownItem onClick={()=>{
-                            setNsUrl("lorawan-ns-eu.tektelic.com")
+                            setNsUrl("https://lorawan-ns-eu.tektelic.com")
                             setExternal(false)
                             setOther(false)
                         }}>
                             TEKTELIC EU
                         </DropdownItem>
                         <DropdownItem onClick={()=>{
-                            setNsUrl("lorawan-ns-dev.tektelic.com")
+                            setNsUrl("https://lorawan-ns-dev.tektelic.com")
                             setExternal(false)
                             setOther(false)
                         }}>
@@ -146,9 +153,9 @@ function MainPageInner({socket}) {
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
-                <Col sm={12} lg={2} xs={12} style={{display: !other ? "none" : "inline-block"}}>
+                <Col sm={12} lg={3} xs={12} style={{display: !other ? "none" : "inline-block"}}>
                     <FormInput
-                        placeholder="URL"
+                        placeholder="http(s)://YOUR_URL.COM (no backslash)"
                         value={nsUrl}
                         onChange={(event)=> {setNsUrl(event.target.value)}}
                     />
